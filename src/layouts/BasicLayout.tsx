@@ -143,11 +143,11 @@ const BasicLayout: React.FC<BasicLayoutProps> = (props) => {
         timeInterval: '20201102-20201108', weekNum: 117, coding: 12, testing: 4, documentWriting: 3, selfStudying: 0,
         translate: 10, useless: 12, weekWorkload: 40, weekday: 5, averageWorkload: 8, workSaturation: 0.9,
         weekData: {
-          "monday": { "date": "2020-11-15T16:00:00.000Z", "workInfos": [{ "workName": "后台api", "cost": 8, "workCategory": "编码", "index": 1 }], "ps": "", "sumCost": 8 },
-          "tuesday": { "date": "2020-11-16T16:00:00.000Z", "workInfos": [{ "workName": "api开发", "cost": 4, "workCategory": "编码", "index": 1 }, { "workName": "整理多语言文档", "cost": 1, "workCategory": "文档编写", "index": 2 }, { "workName": "摸鱼", "cost": 3, "workCategory": "准备工作", "index": 3 }], "ps": "", "sumCost": 8 },
-          "wednesday": { "date": "2020-11-17T16:00:00.000Z", "workInfos": [{ "workName": "摸鱼", "cost": 5, "workCategory": "准备工作", "index": 1 }, { "workName": "测api", "cost": 3, "workCategory": "编码", "index": 2 }], "ps": "", "sumCost": 8 },
-          "thursday": { "date": "2020-11-18T16:00:00.000Z", "workInfos": [{ "workName": "改api", "cost": 4, "workCategory": "编码", "index": 1 }, { "workName": "测试准备", "cost": 4, "workCategory": "准备工作", "index": 2 }], "ps": "", "sumCost": 8 },
-          "friday": { "date": "2020-11-19T16:00:00.000Z", "workInfos": [{ "workName": "数据对比测试", "cost": 2, "workCategory": "编码", "index": 1 }, { "workName": "数据对比测试", "cost": 4, "workCategory": "测试", "index": 2 }, { "workName": "数据对比测试", "cost": 2, "workCategory": "文档编写", "index": 3 }], "ps": "", "sumCost": 8 },
+          "monday": { "date": "2020-11-15T16:00:00.000Z", "workInfos": [{ "title": "后台api", "cost": 8, "category": "编码", "id": 1 }], "ps": "", "sumCost": 8 },
+          "tuesday": { "date": "2020-11-16T16:00:00.000Z", "workInfos": [{ "title": "api开发", "cost": 4, "category": "编码", "id": 1 }, { "title": "整理多语言文档", "cost": 1, "category": "文档编写", "id": 2 }, { "title": "摸鱼", "cost": 3, "category": "准备工作", "id": 3 }], "ps": "", "sumCost": 8 },
+          "wednesday": { "date": "2020-11-17T16:00:00.000Z", "workInfos": [{ "title": "摸鱼", "cost": 5, "category": "准备工作", "id": 1 }, { "title": "测api", "cost": 3, "category": "编码", "id": 2 }], "ps": "", "sumCost": 8 },
+          "thursday": { "date": "2020-11-18T16:00:00.000Z", "workInfos": [{ "title": "改api", "cost": 4, "category": "编码", "id": 1 }, { "title": "测试准备", "cost": 4, "category": "准备工作", "id": 2 }], "ps": "", "sumCost": 8 },
+          "friday": { "date": "2020-11-19T16:00:00.000Z", "workInfos": [{ "title": "数据对比测试", "cost": 2, "category": "编码", "id": 1 }, { "title": "数据对比测试", "cost": 4, "category": "测试", "id": 2 }, { "title": "数据对比测试", "cost": 2, "category": "文档编写", "id": 3 }], "ps": "", "sumCost": 8 },
           "saturday": { "date": "2020-11-20T16:00:00.000Z", "workInfos": [], "ps": "", "sumCost": 0 },
           "sunday": { "date": "2020-11-21T16:00:00.000Z", "workInfos": [], "ps": "", "sumCost": 0 }
         }
@@ -156,11 +156,11 @@ const BasicLayout: React.FC<BasicLayoutProps> = (props) => {
         timeInterval: '20201109-20201115', weekNum: 118, coding: 12, testing: 14, documentWriting: 3, selfStudying: 0,
         translate: 0, useless: 12, weekWorkload: 40, weekday: 5, averageWorkload: 8, workSaturation: 0.9,
         weekData: {
-          "monday": { "date": "2020-11-15T16:00:00.000Z", "workInfos": [{ "workName": "后台api", "cost": 8, "workCategory": "编码", "index": 1 }], "ps": "", "sumCost": 8 },
-          "tuesday": { "date": "2020-11-16T16:00:00.000Z", "workInfos": [{ "workName": "api开发", "cost": 4, "workCategory": "编码", "index": 1 }, { "workName": "整理多语言文档", "cost": 1, "workCategory": "文档编写", "index": 2 }, { "workName": "摸鱼", "cost": 3, "workCategory": "准备工作", "index": 3 }], "ps": "", "sumCost": 8 },
-          "wednesday": { "date": "2020-11-17T16:00:00.000Z", "workInfos": [{ "workName": "摸鱼", "cost": 5, "workCategory": "准备工作", "index": 1 }, { "workName": "测api", "cost": 3, "workCategory": "编码", "index": 2 }], "ps": "", "sumCost": 8 },
-          "thursday": { "date": "2020-11-18T16:00:00.000Z", "workInfos": [{ "workName": "改api", "cost": 4, "workCategory": "编码", "index": 1 }, { "workName": "测试准备", "cost": 4, "workCategory": "准备工作", "index": 2 }], "ps": "", "sumCost": 8 },
-          "friday": { "date": "2020-11-19T16:00:00.000Z", "workInfos": [{ "workName": "数据对比测试", "cost": 2, "workCategory": "编码", "index": 1 }, { "workName": "数据对比测试", "cost": 4, "workCategory": "测试", "index": 2 }, { "workName": "数据对比测试", "cost": 2, "workCategory": "文档编写", "index": 3 }], "ps": "", "sumCost": 8 },
+          "monday": { "date": "2020-11-15T16:00:00.000Z", "workInfos": [{ "title": "后台api", "cost": 8, "category": "编码", "id": 1 }], "ps": "", "sumCost": 8 },
+          "tuesday": { "date": "2020-11-16T16:00:00.000Z", "workInfos": [{ "title": "api开发", "cost": 4, "category": "编码", "id": 1 }, { "title": "整理多语言文档", "cost": 1, "category": "文档编写", "id": 2 }, { "title": "摸鱼", "cost": 3, "category": "准备工作", "id": 3 }], "ps": "", "sumCost": 8 },
+          "wednesday": { "date": "2020-11-17T16:00:00.000Z", "workInfos": [{ "title": "摸鱼", "cost": 5, "category": "准备工作", "id": 1 }, { "title": "测api", "cost": 3, "category": "编码", "id": 2 }], "ps": "", "sumCost": 8 },
+          "thursday": { "date": "2020-11-18T16:00:00.000Z", "workInfos": [{ "title": "改api", "cost": 4, "category": "编码", "id": 1 }, { "title": "测试准备", "cost": 4, "category": "准备工作", "id": 2 }], "ps": "", "sumCost": 8 },
+          "friday": { "date": "2020-11-19T16:00:00.000Z", "workInfos": [{ "title": "数据对比测试", "cost": 2, "category": "编码", "id": 1 }, { "title": "数据对比测试", "cost": 4, "category": "测试", "id": 2 }, { "title": "数据对比测试", "cost": 2, "category": "文档编写", "id": 3 }], "ps": "", "sumCost": 8 },
           "saturday": { "date": "2020-11-20T16:00:00.000Z", "workInfos": [], "ps": "", "sumCost": 0 },
           "sunday": { "date": "2020-11-21T16:00:00.000Z", "workInfos": [], "ps": "", "sumCost": 0 }
         }
@@ -169,11 +169,11 @@ const BasicLayout: React.FC<BasicLayoutProps> = (props) => {
         timeInterval: '20201116-20201122', weekNum: 119, coding: 21, testing: 4, documentWriting: 3, selfStudying: 0,
         translate: 0, useless: 12, weekWorkload: 40, weekday: 5, averageWorkload: 8, workSaturation: 0.7,
         weekData: {
-          "monday": { "date": "2020-11-15T16:00:00.000Z", "workInfos": [{ "workName": "后台api", "cost": 8, "workCategory": "编码", "index": 1 }], "ps": "", "sumCost": 8 },
-          "tuesday": { "date": "2020-11-16T16:00:00.000Z", "workInfos": [{ "workName": "api开发", "cost": 4, "workCategory": "编码", "index": 1 }, { "workName": "整理多语言文档", "cost": 1, "workCategory": "文档编写", "index": 2 }, { "workName": "摸鱼", "cost": 3, "workCategory": "准备工作", "index": 3 }], "ps": "", "sumCost": 8 },
-          "wednesday": { "date": "2020-11-17T16:00:00.000Z", "workInfos": [{ "workName": "摸鱼", "cost": 5, "workCategory": "准备工作", "index": 1 }, { "workName": "测api", "cost": 3, "workCategory": "编码", "index": 2 }], "ps": "", "sumCost": 8 },
-          "thursday": { "date": "2020-11-18T16:00:00.000Z", "workInfos": [{ "workName": "改api", "cost": 4, "workCategory": "编码", "index": 1 }, { "workName": "测试准备", "cost": 4, "workCategory": "准备工作", "index": 2 }], "ps": "", "sumCost": 8 },
-          "friday": { "date": "2020-11-19T16:00:00.000Z", "workInfos": [{ "workName": "数据对比测试", "cost": 2, "workCategory": "编码", "index": 1 }, { "workName": "数据对比测试", "cost": 4, "workCategory": "测试", "index": 2 }, { "workName": "数据对比测试", "cost": 2, "workCategory": "文档编写", "index": 3 }], "ps": "", "sumCost": 8 },
+          "monday": { "date": "2020-11-15T16:00:00.000Z", "workInfos": [{ "title": "后台api", "cost": 8, "category": "编码", "id": 1 }], "ps": "", "sumCost": 8 },
+          "tuesday": { "date": "2020-11-16T16:00:00.000Z", "workInfos": [{ "title": "api开发", "cost": 4, "category": "编码", "id": 1 }, { "title": "整理多语言文档", "cost": 1, "category": "文档编写", "id": 2 }, { "title": "摸鱼", "cost": 3, "category": "准备工作", "id": 3 }], "ps": "", "sumCost": 8 },
+          "wednesday": { "date": "2020-11-17T16:00:00.000Z", "workInfos": [{ "title": "摸鱼", "cost": 5, "category": "准备工作", "id": 1 }, { "title": "测api", "cost": 3, "category": "编码", "id": 2 }], "ps": "", "sumCost": 8 },
+          "thursday": { "date": "2020-11-18T16:00:00.000Z", "workInfos": [{ "title": "改api", "cost": 4, "category": "编码", "id": 1 }, { "title": "测试准备", "cost": 4, "category": "准备工作", "id": 2 }], "ps": "", "sumCost": 8 },
+          "friday": { "date": "2020-11-19T16:00:00.000Z", "workInfos": [{ "title": "数据对比测试", "cost": 2, "category": "编码", "id": 1 }, { "title": "数据对比测试", "cost": 4, "category": "测试", "id": 2 }, { "title": "数据对比测试", "cost": 2, "category": "文档编写", "id": 3 }], "ps": "", "sumCost": 8 },
           "saturday": { "date": "2020-11-20T16:00:00.000Z", "workInfos": [], "ps": "", "sumCost": 0 },
           "sunday": { "date": "2020-11-21T16:00:00.000Z", "workInfos": [], "ps": "", "sumCost": 0 }
         }

@@ -1,4 +1,4 @@
-import { getWeekDailyList, importDailyInfo } from '@/services/daily';
+import { exportDailyInfo, getWeekDailyList, importDailyInfo } from '@/services/daily';
 import { Effect, Reducer } from 'umi';
 import { DailyInfoType, WeekDailyType } from './data';
 
@@ -8,6 +8,7 @@ export interface ModelType {
   effects: {
     getWeekDailyList: Effect;
     importDailyInfo: Effect;
+    exportDailyInfo: Effect;
   };
   reducers: {
     saveWeekDailyList: Reducer<WeekDailyType>;
@@ -34,21 +35,25 @@ const Model: ModelType = {
           value: info.weekNum - 1
         }
       });
-      debugger;
       yield put({
         type: 'saveWeekDailyList', payload: {
           weekDailyList: infos,
           startList: startList,
           endList: startList,
-          // total: data.assetInfos.count,
         }
       });
+      return infos.length;
     },
 
     // 导入CSV文件
     *importDailyInfo({ payload }, { call, put }) {
       yield call(importDailyInfo, payload);
-    }
+    },
+
+    // 导出CSV文件
+    *exportDailyInfo({ payload }, { call, put }) {
+      yield call(exportDailyInfo, payload);
+    },
 
   },
 

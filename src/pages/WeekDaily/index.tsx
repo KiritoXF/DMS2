@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { PageContainer } from '@ant-design/pro-layout';
-import { Card, Row, Col, Image, Menu, Dropdown, Button, Select, Table, Upload } from 'antd';
+import { Card, Row, Col, Image, Menu, Dropdown, Button, Select, Table, Upload, Space, Divider } from 'antd';
 import { useIntl, Link, Dispatch, connect, LoadingType } from 'umi';
 import { DailyInfoType, WeekDailyType } from './data';
 import './index.less';
@@ -17,6 +17,10 @@ const PersonalWeekDaily: React.FC<PropsType> = (props) => {
 
   const { weekDaily, dispatch, loading } = props;
 
+  // 选择的开始日期和结束日期，导出用
+  const [startIndex, setStartIndex] = useState<number>(0);
+  const [endIndex, setEndIndex] = useState<number>(weekDaily.weekDailyList.length);
+
   // 导入的CSV文件
   const [fileList, setFileList] = useState([]);
 
@@ -24,46 +28,51 @@ const PersonalWeekDaily: React.FC<PropsType> = (props) => {
   const tableColumns = [
     {
       title: formatMessage({ id: 'weekDaily.timeInterval', defaultMessage: '时间段' }),
-      dataIndex: 'timeInterval', width: 200
+      dataIndex: 'timeInterval', key: 'timeInterval', width: 200
     },
     {
       title: formatMessage({ id: 'weekDaily.weekNum', defaultMessage: '周数' }),
-      dataIndex: 'weekNum', width: 65,
+      dataIndex: 'weekNum', key: 'weekNum', width: 65,
+      sorter: (a: DailyInfoType, b: DailyInfoType) => a.weekNum - b.weekNum,
+      sortDirections: ['descend', 'ascend'],
     },
     {
       title: formatMessage({ id: 'weekDaily.workContent', defaultMessage: '工作内容' }),
       minWidth: 65,
       children: [
-        { title: formatMessage({ id: 'weekDaily.coding', defaultMessage: '编码' }), dataIndex: "coding" },
-        { title: formatMessage({ id: 'weekDaily.testing', defaultMessage: '测试' }), dataIndex: "testing" },
-        { title: formatMessage({ id: 'weekDaily.documentWriting', defaultMessage: '文档编写' }), dataIndex: "documentWriting" },
-        { title: formatMessage({ id: 'weekDaily.selfStudying', defaultMessage: '自学' }), dataIndex: "selfStudying" },
-        { title: formatMessage({ id: 'weekDaily.translate', defaultMessage: '翻译' }), dataIndex: "translate" },
-        { title: formatMessage({ id: 'weekDaily.useless', defaultMessage: '准备工作' }), dataIndex: "useless" },
+        { title: formatMessage({ id: 'weekDaily.coding', defaultMessage: '编码' }), dataIndex: 'coding', key: 'coding', },
+        { title: formatMessage({ id: 'weekDaily.testing', defaultMessage: '测试' }), dataIndex: 'testing', key: 'testing', },
+        { title: formatMessage({ id: 'weekDaily.documentWriting', defaultMessage: '文档编写' }), dataIndex: 'documentWriting', key: 'documentWriting', },
+        { title: formatMessage({ id: 'weekDaily.selfStudying', defaultMessage: '自学' }), dataIndex: 'selfStudying', key: 'selfStudying', },
+        { title: formatMessage({ id: 'weekDaily.translate', defaultMessage: '翻译' }), dataIndex: 'translate', key: 'translate', },
+        { title: formatMessage({ id: 'weekDaily.useless', defaultMessage: '准备工作' }), dataIndex: 'useless', key: 'useless', },
       ],
     },
-    { title: formatMessage({ id: 'weekDaily.weekWorkload', defaultMessage: '本周工作量' }), dataIndex: 'weekWorkload' },
-    { title: formatMessage({ id: 'weekDaily.weekday', defaultMessage: '工作日' }), dataIndex: 'weekday' },
-    { title: formatMessage({ id: 'weekDaily.averageWorkload', defaultMessage: '日均工作量' }), dataIndex: 'averageWorkload' },
-    { title: formatMessage({ id: 'weekDaily.workSaturation', defaultMessage: '工作饱和度' }), dataIndex: 'workSaturation' },
+    { title: formatMessage({ id: 'weekDaily.weekWorkload', defaultMessage: '本周工作量' }), dataIndex: 'weekWorkload', key: 'weekWorkload', },
+    { title: formatMessage({ id: 'weekDaily.weekday', defaultMessage: '工作日' }), dataIndex: 'weekday', key: 'weekday', },
+    { title: formatMessage({ id: 'weekDaily.averageWorkload', defaultMessage: '日均工作量' }), dataIndex: 'averageWorkload', key: 'averageWorkload', },
+    { title: formatMessage({ id: 'weekDaily.workSaturation', defaultMessage: '工作饱和度' }), dataIndex: 'workSaturation', key: 'workSaturation', },
     {
       title: formatMessage({ id: 'weekDaily.operation', defaultMessage: '操作' }),
-      dataIndex: '', width: 120,
-      render: () => <>
-        <Button type="primary" size="small">{formatMessage({ id: 'cmn.edit', defaultMessage: '编辑' })}</Button>
-        <Button danger size="small">{formatMessage({ id: 'cmn.delete', defaultMessage: '删除' })}</Button>
+      dataIndex: '', key: '', width: 120,
+      render: (record: DailyInfoType) => <>
+        <Space>
+          <Link to={`/weekDaily/${record.weekNum}`}>
+            <Button type="primary">{formatMessage({ id: 'cmn.edit', defaultMessage: '编辑' })}</Button></Link>
+          <Button danger size="small">{formatMessage({ id: 'cmn.delete', defaultMessage: '删除' })}</Button>
+        </Space>
       </>,
     },
   ];
 
   const uploadProps = {
-    onRemove: file => {
+    onRemove: () => {
       setFileList([]);
       return {
         fileList: [],
       }
     },
-    beforeUpload: file => {
+    beforeUpload: (file: any) => {
       setFileList([file]);
       // todo: deal with csv
       dispatch({
@@ -81,48 +90,61 @@ const PersonalWeekDaily: React.FC<PropsType> = (props) => {
   useEffect(() => {
     dispatch({
       type: 'weekDaily/getWeekDailyList',
+    }).then((length: number) => {
+      setEndIndex(length - 1);
     });
   }, []);
+
+  const exportDailyInfo = () => {
+    debugger;
+    dispatch({
+      type: 'weekDaily/exportDailyInfo',
+      payload: {
+        weekDailyList: weekDaily.weekDailyList.slice(startIndex, endIndex + 1)
+          .map(info => { return { ...info, weekData: JSON.stringify(info.weekData) } }),
+        header: tableColumns,
+        fileName: `${weekDaily.startList[startIndex].label.split('-')[0]}`
+          + `-${weekDaily.endList[endIndex].label.split('-')[1]}`
+          + `${formatMessage({ id: 'weekDaily.weekDaily', defaultMessage: '周报.csv' })}`,
+      }
+    });
+  }
 
   return (
     <PageContainer>
       <h2>{formatMessage({ id: 'weekDaily.title', defaultMessage: '我的周报' })}</h2>
-      <div>
-        <Button type="primary">{formatMessage({ id: 'weekDaily.add', defaultMessage: '新增周报' })}</Button>
-        <Upload {...uploadProps}>
-          <Button icon={<UploadOutlined />}>{formatMessage({ id: 'weekDaily.selectFile', defaultMessage: '选择文件' })}</Button>
-        </Upload>
-        {/* <Button
-          type="primary"
-          onClick={handleUpload}
-          disabled={fileList.length === 0}
-          loading={loading}
-          style={{ marginTop: 16 }}
-        >
-          {loading ? 'Uploading' : formatMessage({ id: 'weekDaily.import', defaultMessage: '导入周报' })}
-        </Button> */}
-        <Button>{formatMessage({ id: 'weekDaily.reverse', defaultMessage: '倒序' })}</Button>
-      </div>
-      <div>
-        <Select placeholder={formatMessage({ id: 'weekDaily.start', defaultMessage: '开始区间' })} style={{ width: '200px' }}>
-          {weekDaily.startList.map(item => {
-            return <Select.Option value={item.value}>{item.label}</Select.Option>
-          })}
-        </Select>
-            ~
-            <Select placeholder={formatMessage({ id: 'weekDaily.end', defaultMessage: '结束区间' })} style={{ width: '200px' }}>
-          {weekDaily.endList.map(item => {
-            return <Select.Option value={item.value}>{item.label}</Select.Option>
-          })}
-        </Select>
-        <Button>{formatMessage({ id: 'weekDaily.export', defaultMessage: '导出周报' })}</Button>
-      </div>
+      <Space direction="vertical">
+        <Space>
+          <Upload {...uploadProps}>
+            <Button icon={<UploadOutlined />}>{formatMessage({ id: 'weekDaily.import', defaultMessage: '导入周报' })}</Button>
+          </Upload>
+          <Link to='weekDaily/add' style={{ marginTop: '10px' }}>
+            <Button type="primary">{formatMessage({ id: 'weekDaily.add', defaultMessage: '新增周报' })}</Button>
+          </Link>
+        </Space>
+        <Space size={5}>
+          <Select placeholder={formatMessage({ id: 'weekDaily.start', defaultMessage: '开始区间' })}
+            onChange={(value: number) => { setStartIndex(value) }} style={{ width: '200px' }}>
+            {weekDaily.startList.map(item => {
+              return <Select.Option value={item.value} key={item.value}>{item.label}</Select.Option>
+            })}
+          </Select>
+          ~
+        <Select placeholder={formatMessage({ id: 'weekDaily.end', defaultMessage: '结束区间' })}
+            onChange={(value: number) => { setEndIndex(value) }} style={{ width: '200px' }}>
+            {weekDaily.endList.map(item => {
+              return <Select.Option value={item.value} key={item.value}>{item.label}</Select.Option>
+            })}
+          </Select>
+          <Button onClick={exportDailyInfo}>{formatMessage({ id: 'weekDaily.export', defaultMessage: '导出周报' })}</Button>
+        </Space>
+      </Space>
+      <Divider />
       <Table
         columns={tableColumns}
         dataSource={weekDaily.weekDailyList}
         bordered
         size="middle"
-        // scroll={{ x: 'calc(700px + 50%)', y: 240 }}
         loading={loading}
       />
     </PageContainer>

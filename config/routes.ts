@@ -30,10 +30,36 @@
             component: './Welcome',
           },
           {
+            path: '/weekDaily/add',
+            hideInMenu: true,
+            component: './AddWeekDaily',
+          },
+          {
+            path: '/weekDaily/:weekNum',
+            hideInMenu: true,
+            component: './AddWeekDaily',
+          },
+          {
             path: '/weekDaily',
             name: 'weekDaily',
             icon: 'smile',
             component: './WeekDaily',
+            routes: [
+              {
+                path: '/weekDaily/add',
+                name: 'weekDaily add',
+                icon: 'add',
+                hideInMenu: true,
+                component: './AddWeekDaily',
+              },
+              {
+                path: '/weekDaily/:weekNum',
+                name: 'weekDaily edit',
+                icon: 'edit',
+                hideInMenu: true,
+                component: './AddWeekDaily',
+              },
+            ]
           },
           {
             path: '/admin',

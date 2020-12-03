@@ -32,7 +32,7 @@ const handleImportData = (data) => {
         ((Number(item[2]) + Number(item[3]) + Number(item[4]) + Number(item[6])) / Number(item[8])).toFixed(1)
       ) || 0,
       // unescape and remove the double quotes at start and last.
-      weekData: unescape(item[13]).replace(/^["|'](.*)["|']$/g, "$1")
+      weekData: JSON.parse(unescape(item[13]).replace(/^["|'](.*)["|']$/g, "$1"))
     });
   });
   return handledData;
@@ -63,12 +63,7 @@ const handleImportData = (data) => {
   // this.drawCharts();
 }
 
-// 获取所有周报信息
-export async function getWeekDailyList(): Promise<any> {
-  const db = openDailyTable();
-  return await db.originInfo.toArray();
-}
-
+// 导入周报
 export async function importDailyInfo(param: any): Promise<any> {
   const db = openDailyTable();
   debugger;
@@ -91,4 +86,31 @@ export async function importDailyInfo(param: any): Promise<any> {
     });
   };
   reader.readAsBinaryString(param.file);
+}
+
+// 导出周报
+export async function exportDailyInfo(param: any): Promise<any> {
+  debugger;
+  const wb = XLSX.utils.book_new();
+  const ws = XLSX.utils.json_to_sheet(param.weekDailyList, param.header);
+  XLSX.utils.book_append_sheet(wb, ws, "SheetJS");
+  XLSX.writeFile(wb, param.fileName);
+}
+
+// 获取所有周报信息
+export async function getWeekDailyList(): Promise<any> {
+  const db = openDailyTable();
+  return await db.originInfo.toArray();
+}
+
+// 获取某一周的周报信息
+export async function getWeekDailyInfo(param: any): Promise<any> {
+  const db = openDailyTable();
+  return await db.originInfo.get({weekNum: param.weekNum});
+}
+
+// 获取最新的周号
+export async function getLatestWeekNum(): Promise<any> {
+  const db = openDailyTable();
+  return db.originInfo.toCollection().last();
 }

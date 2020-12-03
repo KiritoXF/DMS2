@@ -5,6 +5,22 @@ export interface WeekDailyType {
   endList: [{ label: string, value: number }];
 }
 
+// 每天的工作内容数组的类型
+export interface WorkInfoType {
+  id: number;
+  title: string;
+  cost: number;
+  category: number;
+}
+
+// 每天的数据的类型
+export interface DayInfoType {
+  date: string;
+  sumCost: number;
+  ps?: string;
+  workInfos: WorkInfoType[];
+}
+
 // 日报的类型
 export interface DailyInfoType {
   timeInterval: String;
@@ -19,5 +35,13 @@ export interface DailyInfoType {
   weekday: number;
   averageWorkload: number;
   workSaturation: number;
-  weekData: String;
+  weekData: {
+    monday: DayInfoType,
+    tuesday: DayInfoType,
+    wednesday: DayInfoType,
+    thursday: DayInfoType,
+    friday: DayInfoType,
+    saturday: DayInfoType,
+    sunday: DayInfoType,
+  };
 }
