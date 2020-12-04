@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { EditableProTable, ProColumns } from '@ant-design/pro-table';
 import ProField from '@ant-design/pro-field';
 import { ProFormRadio } from '@ant-design/pro-form';
-import { formatMessage, useIntl } from 'umi';
-import { InputNumber, Select, Table } from 'antd';
+import { Dispatch, formatMessage, useIntl } from 'umi';
+import { Button, InputNumber, Select, Table } from 'antd';
 import { DayInfoType, WorkInfoType } from '@/pages/WeekDaily/data';
 
 // 工作类别 TODO: 从配置中获取
@@ -55,9 +55,30 @@ const columns: ProColumns<WorkInfoType>[] = [
   },
 ];
 
-export default (props: { data?: DayInfoType, date: string }) => {
+// 入参类型
+interface PropsType {
+  // 这一天的数据
+  data?: DayInfoType;
+  // 用来显示的日期
+  date: string;
+  // 用来标识是星期几
+  key: number;
+  dispatch: Dispatch;
+}
+
+export default (props: PropsType) => {
   const [editableKeys, setEditableRowKeys] = useState<React.Key[]>([]);
   const [dataSource, setDataSource] = useState<WorkInfoType[]>([]);
+
+  // 更新天的变化数据
+  const updateDayInfo = () => {
+    props.dispatch({
+      type: 'addWeekDaily/saveDayInfo',
+      payload: {
+        dayInfo: dataSource
+      }
+    })
+  }
 
   return (
     <>
@@ -65,6 +86,7 @@ export default (props: { data?: DayInfoType, date: string }) => {
         {formatMessage({ id: 'addWeekDaily.date', defaultMessage: '日期:' })}
         {props.date || formatMessage({ id: 'addWeekDaily.unSelected', defaultMessage: '未选择' })}
       </h3>
+      <Button onClick={() => { console.log(dataSource, props) }}>ssssss</Button>
       <EditableProTable<WorkInfoType>
         rowKey="id"
         recordCreatorProps={{

@@ -36,37 +36,11 @@ const handleImportData = (data) => {
     });
   });
   return handledData;
-  // const importData = handledData.map(item => {
-  //   return [
-  //     item.timeInterval,
-  //     item.weeks,
-  //     item.coding,
-  //     item.testing,
-  //     item.documentWriting,
-  //     item.selfStudying,
-  //     item.translate,
-  //     item.useless,
-  //     item.weekWorkload,
-  //     item.weekday,
-  //     item.averageWorkload,
-  //     item.workSaturation,
-  //     item.weekData
-  //   ];
-  /*return `
-  ('${item.timeInterval}',${item.weeks},${item.coding},${item.testing}
-  ,${item.documentWriting},${item.selfStudying},${item.translate},${item.useless}
-  ,${item.weekWorkload},${item.weekday},${item.averageWorkload},${item.workSaturation}
-  ,'${item.weekData}');
-  `*/
-  // this.infos = handledData;
-  // this.importInfos(importData);
-  // this.drawCharts();
 }
 
 // 导入周报
 export async function importDailyInfo(param: any): Promise<any> {
   const db = openDailyTable();
-  debugger;
   const reader = new FileReader();
   reader.onload = (e) => {
     const workbook = XLSX.read(e.target?.result, {
@@ -90,7 +64,6 @@ export async function importDailyInfo(param: any): Promise<any> {
 
 // 导出周报
 export async function exportDailyInfo(param: any): Promise<any> {
-  debugger;
   const wb = XLSX.utils.book_new();
   const ws = XLSX.utils.json_to_sheet(param.weekDailyList, param.header);
   XLSX.utils.book_append_sheet(wb, ws, "SheetJS");
@@ -106,11 +79,17 @@ export async function getWeekDailyList(): Promise<any> {
 // 获取某一周的周报信息
 export async function getWeekDailyInfo(param: any): Promise<any> {
   const db = openDailyTable();
-  return await db.originInfo.get({weekNum: param.weekNum});
+  return await db.originInfo.get({ weekNum: param.weekNum });
 }
 
 // 获取最新的周号
 export async function getLatestWeekNum(): Promise<any> {
   const db = openDailyTable();
   return db.originInfo.toCollection().last();
+}
+
+// 更新某一周的周报
+export async function updateWeekDaily(param: any): Promise<any> {
+  const db = openDailyTable();
+  db.originInfo.update(param.id, { ...param });
 }

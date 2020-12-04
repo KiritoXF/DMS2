@@ -74,7 +74,27 @@ const Daily: React.FC<PropsType> = (props) => {
     dispatch({
       type: 'addWeekDaily/clearState',
     });
-  }, [history.pathname])
+  }, [history.pathname]);
+
+  // 保存当周的周报
+  const saveWeekDaily = () => {
+    // 更新
+    if (param.weekNum) {
+      return dispatch({
+        type: 'addWeekDaily/updateWeekDaily',
+        payload: {
+          dailyInfo,
+        }
+      });
+    }
+    // 新建
+    return dispatch({
+      type: 'addWeekDaily/addWeekDaily',
+      payload: {
+        dailyInfo,
+      }
+    });
+  }
 
   return (
     <PageContainer>
@@ -95,7 +115,7 @@ const Daily: React.FC<PropsType> = (props) => {
           <span>{weekRange[0]}~{weekRange[6]}</span>
         </Space>
         <Space>
-          <Button type="primary" onClick={pickerChanged}>{formatMessage({ id: 'cmn.save', defaultMessage: '保存' })}</Button>
+          <Button type="primary" onClick={saveWeekDaily}>{formatMessage({ id: 'cmn.save', defaultMessage: '保存' })}</Button>
           <Link to="/weekDaily"><Button>{formatMessage({ id: 'cmn.back', defaultMessage: '返回' })}</Button></Link>
         </Space>
         <Divider />
@@ -104,25 +124,25 @@ const Daily: React.FC<PropsType> = (props) => {
             table + Chart
           </TabPane>
           <TabPane tab={formatMessage({ id: 'addWeekDaily.monday', defaultMessage: '周一' })} key="1">
-            <DailyDisplay data={dailyInfo?.weekData?.monday} date={weekRange[0]} />
+            <DailyDisplay data={dailyInfo?.weekData?.monday} date={weekRange[0]} key={1} />
           </TabPane>
           <TabPane tab={formatMessage({ id: 'addWeekDaily.tuesday', defaultMessage: '周二' })} key="2">
-            <DailyDisplay data={dailyInfo?.weekData?.tuesday} date={weekRange[1]} />
+            <DailyDisplay data={dailyInfo?.weekData?.tuesday} date={weekRange[1]} key={2} />
           </TabPane>
           <TabPane tab={formatMessage({ id: 'addWeekDaily.wednesday', defaultMessage: '周三' })} key="3">
-            <DailyDisplay data={dailyInfo?.weekData?.wednesday} date={weekRange[2]} />
+            <DailyDisplay data={dailyInfo?.weekData?.wednesday} date={weekRange[2]} key={3} />
           </TabPane>
           <TabPane tab={formatMessage({ id: 'addWeekDaily.thursday', defaultMessage: '周四' })} key="4">
-            <DailyDisplay data={dailyInfo?.weekData?.thursday} date={weekRange[3]} />
+            <DailyDisplay data={dailyInfo?.weekData?.thursday} date={weekRange[3]} key={4} />
           </TabPane>
           <TabPane tab={formatMessage({ id: 'addWeekDaily.friday', defaultMessage: '周五' })} key="5">
-            <DailyDisplay data={dailyInfo?.weekData?.friday} date={weekRange[4]} />
+            <DailyDisplay data={dailyInfo?.weekData?.friday} date={weekRange[4]} key={5} />
           </TabPane>
           <TabPane tab={formatMessage({ id: 'addWeekDaily.saturday', defaultMessage: '周六' })} key="6">
-            <DailyDisplay data={dailyInfo?.weekData?.saturday} date={weekRange[5]} />
+            <DailyDisplay data={dailyInfo?.weekData?.saturday} date={weekRange[5]} key={6} />
           </TabPane>
           <TabPane tab={formatMessage({ id: 'addWeekDaily.sunday', defaultMessage: '周日' })} key="7">
-            <DailyDisplay data={dailyInfo?.weekData?.sunday} date={weekRange[6]} />
+            <DailyDisplay data={dailyInfo?.weekData?.sunday} date={weekRange[6]} key={7} />
           </TabPane>
         </Tabs>
       </Space>
