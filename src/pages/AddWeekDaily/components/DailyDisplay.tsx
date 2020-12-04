@@ -1,19 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { EditableProTable, ProColumns } from '@ant-design/pro-table';
 import ProField from '@ant-design/pro-field';
 import { ProFormRadio } from '@ant-design/pro-form';
 import { formatMessage, useIntl } from 'umi';
-import moment from 'moment';
-import { Button, InputNumber, Select, Table } from 'antd';
+import { InputNumber, Select, Table } from 'antd';
 import { DayInfoType, WorkInfoType } from '@/pages/WeekDaily/data';
-
-
-interface DataSourceType {
-  id: React.Key;
-  title: string;
-  cost: number;
-  category: string;
-}
 
 // 工作类别 TODO: 从配置中获取
 const categoryOptions = [
@@ -25,7 +16,7 @@ const categoryOptions = [
   { label: '准备工作', value: 'useless' },
 ];
 
-const columns: ProColumns<DataSourceType>[] = [
+const columns: ProColumns<WorkInfoType>[] = [
   {
     title: '事项',
     dataIndex: 'title',
@@ -64,20 +55,22 @@ const columns: ProColumns<DataSourceType>[] = [
   },
 ];
 
-export default (props: { data?: DayInfoType }) => {
+export default (props: { data?: DayInfoType, date: string }) => {
   const [editableKeys, setEditableRowKeys] = useState<React.Key[]>([]);
-  const [dataSource, setDataSource] = useState<DataSourceType[]>([]);
+  const [dataSource, setDataSource] = useState<WorkInfoType[]>([]);
 
   return (
     <>
-      <Button onClick={() => { console.log(props) }}>XXXXXXXXXX</Button>
-      <EditableProTable<DataSourceType>
+      <h3>
+        {formatMessage({ id: 'addWeekDaily.date', defaultMessage: '日期:' })}
+        {props.date || formatMessage({ id: 'addWeekDaily.unSelected', defaultMessage: '未选择' })}
+      </h3>
+      <EditableProTable<WorkInfoType>
         rowKey="id"
-        headerTitle={props.data?.date} // TODO: date is not right
         recordCreatorProps={{
           position: 'end',
           record: {
-            id: (Math.random() * 1000000).toFixed(0),
+            id: (Math.random() * 1000000),
             title: '',
             cost: 0,
             category: '',
@@ -96,12 +89,16 @@ export default (props: { data?: DayInfoType }) => {
           onChange: setEditableRowKeys,
         }}
         summary={pageData => {
-          debugger;
-          // const sum = pageData.reduce((accumulator: WorkInfoType, current: WorkInfoType) => { return accumulator.cost + current.cost })
+          if (!pageData.length) {
+            return;
+          }
+          const sum = pageData?.reduce((accumulator, current: WorkInfoType) => {
+            return accumulator + current?.cost
+          }, 0);
           return (
             <Table.Summary.Row>
               <Table.Summary.Cell index={0}>{formatMessage({ id: 'cmn.sum', defaultMessage: '总计' })}</Table.Summary.Cell>
-              <Table.Summary.Cell index={1}></Table.Summary.Cell>
+              <Table.Summary.Cell index={1}>{sum}</Table.Summary.Cell>
             </Table.Summary.Row>
           )
         }}

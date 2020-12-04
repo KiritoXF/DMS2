@@ -134,7 +134,7 @@ const BasicLayout: React.FC<BasicLayoutProps> = (props) => {
     if (!exists) {
       const db = new Dexie('daily');
       db.version(1).stores({
-        originInfo: `++id,timeInterval,weeks,coding,testing,documentWriting,
+        originInfo: `++id,timeInterval,weekNum,coding,testing,documentWriting,
           selfStudying,translate,useless,weekWorkload,weekday,averageWorkload,workSaturation,weekData` });
       db.open();
 

@@ -10,7 +10,7 @@ export interface WorkInfoType {
   id: number;
   title: string;
   cost: number;
-  category: number;
+  category: string;
 }
 
 // 每天的数据的类型
