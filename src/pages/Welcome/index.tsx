@@ -34,8 +34,8 @@ export default (): React.ReactNode => {
         </Col>
         <Col span={12} style={{ padding: '0 0 10px 0' }}>
           <Card title={formatMessage({ id: 'welcome.weekDaily', defaultMessage: '周报信息' })}>
-            <p><Link to='/myDaily'>{formatMessage({ id: 'welcome.myDaily', defaultMessage: '我的周报' })}</Link></p>
-            <p><Link to='/weekDaily'>{formatMessage({ id: 'welcome.weekDaily', defaultMessage: '团队周报' })}</Link></p>
+            <p><Link to='/weekDaily'>{formatMessage({ id: 'welcome.myDaily', defaultMessage: '我的周报' })}</Link></p>
+            <p><Link to='/teamDaily'>{formatMessage({ id: 'welcome.teamDaily', defaultMessage: '团队周报' })}</Link></p>
           </Card>
         </Col>
       </Row>

@@ -93,3 +93,10 @@ export async function updateWeekDaily(param: any): Promise<any> {
   const db = openDailyTable();
   db.originInfo.update(param.id, { ...param });
 }
+
+// 新增某一周的周报
+export async function addWeekDaily(param: any): Promise<any> {
+  const db = openDailyTable();
+  debugger;
+  db.originInfo.add(param);
+}

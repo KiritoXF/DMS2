@@ -1,4 +1,4 @@
-import { exportDailyInfo, getWeekDailyInfo, getWeekDailyList, importDailyInfo, updateWeekDaily } from '@/services/daily';
+import { addWeekDaily, exportDailyInfo, getWeekDailyInfo, getWeekDailyList, importDailyInfo, updateWeekDaily } from '@/services/daily';
 import { Effect, Reducer } from 'umi';
 import { AddWeekDailyType } from './data';
 
@@ -12,6 +12,7 @@ export interface ModelType {
   };
   reducers: {
     saveDailyInfo: Reducer<AddWeekDailyType>;
+    saveSummaryData: Reducer<AddWeekDailyType>;
     saveDayInfo: Reducer<AddWeekDailyType>;
     clearState: Reducer<AddWeekDailyType>;
   };
@@ -44,7 +45,16 @@ const AddWeekDailyModel: ModelType = {
         saturday: {},
         sunday: {},
       },
-    }
+    },
+    summaryData: [
+      { weekday: 'monday', coding: 0, testing: 0, documentWriting: 0, selfStudying: 0, translate: 0, useless: 0 },
+      { weekday: 'tuesday', coding: 0, testing: 0, documentWriting: 0, selfStudying: 0, translate: 0, useless: 0 },
+      { weekday: 'wednesday', coding: 0, testing: 0, documentWriting: 0, selfStudying: 0, translate: 0, useless: 0 },
+      { weekday: 'thursday', coding: 0, testing: 0, documentWriting: 0, selfStudying: 0, translate: 0, useless: 0 },
+      { weekday: 'friday', coding: 0, testing: 0, documentWriting: 0, selfStudying: 0, translate: 0, useless: 0 },
+      { weekday: 'saturday', coding: 0, testing: 0, documentWriting: 0, selfStudying: 0, translate: 0, useless: 0 },
+      { weekday: 'sunday', coding: 0, testing: 0, documentWriting: 0, selfStudying: 0, translate: 0, useless: 0 },
+    ],
   },
 
   effects: {
@@ -66,8 +76,8 @@ const AddWeekDailyModel: ModelType = {
 
     // 新增一周的周报信息
     *addWeekDaily({ payload }, { call, put }) {
-      const t = 1;
       debugger;
+      return yield call(addWeekDaily, payload.dailyInfo);
     },
 
   },
@@ -77,7 +87,6 @@ const AddWeekDailyModel: ModelType = {
       return {
         ...state,
         ...action.payload,
-        dailyInfo: { ...action.payload.dailyInfo },
       };
     },
 
@@ -87,15 +96,39 @@ const AddWeekDailyModel: ModelType = {
         ...state,
         dailyInfo: {
           ...state?.dailyInfo,
-          [action.payload.week]: action.payload.dayInfo,
-        }
+          weekData: {
+            ...state?.dailyInfo.weekData,
+            ...action.payload.dailyInfo,
+          }
+        },
+        summaryData: [
+          { weekday: 'monday', coding: 0, testing: 0, documentWriting: 0, selfStudying: 0, translate: 0, useless: 0 },
+          { weekday: 'tuesday', coding: 0, testing: 0, documentWriting: 0, selfStudying: 0, translate: 0, useless: 0 },
+          { weekday: 'wednesday', coding: 0, testing: 0, documentWriting: 0, selfStudying: 0, translate: 0, useless: 0 },
+          { weekday: 'thursday', coding: 0, testing: 0, documentWriting: 0, selfStudying: 0, translate: 0, useless: 0 },
+          { weekday: 'friday', coding: 0, testing: 0, documentWriting: 0, selfStudying: 0, translate: 0, useless: 0 },
+          { weekday: 'saturday', coding: 0, testing: 0, documentWriting: 0, selfStudying: 0, translate: 0, useless: 0 },
+          { weekday: 'sunday', coding: 0, testing: 0, documentWriting: 0, selfStudying: 0, translate: 0, useless: 0 },
+        ],
+      }
+    },
+
+    // 更新汇总table的数据
+    saveSummaryData(state, action) {
+      return {
+        ...state,
+        dailyInfo: {
+          ...state?.dailyInfo
+        },
+        summaryData: action.payload.summaryData,
       }
     },
 
     // 清除数据
     clearState(state, action) {
       return {
-        dailyInfo: {}
+        dailyInfo: {},
+        summaryData: [],
       }
     }
   },
