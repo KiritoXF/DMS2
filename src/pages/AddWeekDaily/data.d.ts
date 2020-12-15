@@ -2,6 +2,7 @@ import DailyInfoType from '../WeekDaily/data';
 
 interface SummaryDataType {
   weekday: string;
+  date?: string;
   coding: number;
   testing: number;
   documentWriting: number;
@@ -12,7 +13,4 @@ interface SummaryDataType {
 
 export interface AddWeekDailyType {
   dailyInfo: DailyInfoType;
-  // 汇总页的table数据
-  summaryData: SummaryDataType[];
 }
-

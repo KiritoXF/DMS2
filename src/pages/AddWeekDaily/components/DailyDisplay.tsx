@@ -5,7 +5,6 @@ import { ProFormRadio } from '@ant-design/pro-form';
 import { Dispatch, formatMessage, useIntl } from 'umi';
 import { Button, InputNumber, Select, Table } from 'antd';
 import { DailyInfoType, DayInfoType, WorkInfoType } from '@/pages/WeekDaily/data';
-import { SummaryDataType } from '../data';
 
 // 工作类别 TODO: 从配置中获取
 const categoryOptions = [
@@ -73,43 +72,6 @@ export default (props: PropsType) => {
   const [editableKeys, setEditableRowKeys] = useState<React.Key[]>([]);
   const [dataSource, setDataSource] = useState<WorkInfoType[]>([]);
 
-  // 类别 TODO:稍后抽作共通 TOTODO:读配置
-  const categoryOptions = [
-    { label: '编码', value: 'coding', },
-    { label: '测试', value: 'testing' },
-    { label: '文档编写', value: 'documentWriting' },
-    { label: '自学', value: 'selfStudying' },
-    { label: '翻译', value: 'translate' },
-    { label: '准备工作', value: 'useless' },
-  ];
-
-  // 更新汇总table的数据
-  const updateSummaryTable = () => {
-    const tableData: SummaryDataType[] = [];
-    Object.getOwnPropertyNames(props.dailyInfo.weekData).forEach(weekDay => {
-      const temp = {};
-      categoryOptions.forEach(category => {
-        // BUG: 这里weekData好像套娃了两层
-        temp[category.value] = props.dailyInfo.weekData[weekDay].workInfos.reduce((total, current) => {
-          if (current.category === category.value) {
-            return total + current.cost;
-          }
-          return total;
-        }, 0);
-      });
-      tableData.push({
-        weekDay,
-        ...temp
-      });
-      props.dispatch({
-        type: 'addWeekDaily/saveSummaryData',
-        payload: {
-          summaryData: tableData,
-        }
-      })
-    });
-  }
-
   // 更新天的变化数据
   const updateDayInfo = (value: WorkInfoType[]) => {
     props.dispatch({
@@ -123,10 +85,9 @@ export default (props: PropsType) => {
               ps: '', // TODO
             },
           }
-        }
+        },
       }
     });
-    updateSummaryTable();
   }
 
   return (

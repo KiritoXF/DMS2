@@ -1,4 +1,4 @@
-import { addWeekDaily, exportDailyInfo, getWeekDailyInfo, getWeekDailyList, importDailyInfo, updateWeekDaily } from '@/services/daily';
+import { addWeekDaily, getWeekDailyInfo, updateWeekDaily } from '@/services/daily';
 import { Effect, Reducer } from 'umi';
 import { AddWeekDailyType } from './data';
 
@@ -12,12 +12,10 @@ export interface ModelType {
   };
   reducers: {
     saveDailyInfo: Reducer<AddWeekDailyType>;
-    saveSummaryData: Reducer<AddWeekDailyType>;
     saveDayInfo: Reducer<AddWeekDailyType>;
     clearState: Reducer<AddWeekDailyType>;
   };
 }
-
 
 const AddWeekDailyModel: ModelType = {
   namespace: 'addWeekDaily',
@@ -46,15 +44,6 @@ const AddWeekDailyModel: ModelType = {
         sunday: {},
       },
     },
-    summaryData: [
-      { weekday: 'monday', coding: 0, testing: 0, documentWriting: 0, selfStudying: 0, translate: 0, useless: 0 },
-      { weekday: 'tuesday', coding: 0, testing: 0, documentWriting: 0, selfStudying: 0, translate: 0, useless: 0 },
-      { weekday: 'wednesday', coding: 0, testing: 0, documentWriting: 0, selfStudying: 0, translate: 0, useless: 0 },
-      { weekday: 'thursday', coding: 0, testing: 0, documentWriting: 0, selfStudying: 0, translate: 0, useless: 0 },
-      { weekday: 'friday', coding: 0, testing: 0, documentWriting: 0, selfStudying: 0, translate: 0, useless: 0 },
-      { weekday: 'saturday', coding: 0, testing: 0, documentWriting: 0, selfStudying: 0, translate: 0, useless: 0 },
-      { weekday: 'sunday', coding: 0, testing: 0, documentWriting: 0, selfStudying: 0, translate: 0, useless: 0 },
-    ],
   },
 
   effects: {
@@ -76,10 +65,73 @@ const AddWeekDailyModel: ModelType = {
 
     // 新增一周的周报信息
     *addWeekDaily({ payload }, { call, put }) {
-      debugger;
-      return yield call(addWeekDaily, payload.dailyInfo);
-    },
+      const weekDailyInfoObj = {};
+      // 类别 TODO:稍后抽作共通 TOTODO:读配置
+      const categoryOptions = [
+        { label: '编码', value: 'coding', },
+        { label: '测试', value: 'testing' },
+        { label: '文档编写', value: 'documentWriting' },
+        { label: '自学', value: 'selfStudying' },
+        { label: '翻译', value: 'translate' },
+        { label: '准备工作', value: 'useless' },
+      ];
+      // 有效的工作类别 TODO:工作效率weekWorkload的结果最好不往db存吧？直接在前台计算显示就行，这样可拓展性更高一点
+      const effectiveCategory = ['coding', 'testing', 'documentWriting'];
 
+      const weekData = {};
+      // 该周的总工作量
+      let sumWeekWorkload = 0;
+      // 工作日
+      let weekDayCount = 0;
+      Object.getOwnPropertyNames(payload.dailyInfo.weekData).forEach(weekDay => {
+        // 如果没点过该日的Tab页，生成个都为0的
+        if (!payload.dailyInfo.weekData[weekDay].workInfos) {
+          const emptyObj = {};
+          categoryOptions.forEach(category => {
+            emptyObj[category.value] = 0;
+          });
+          weekData[weekDay] = {
+            workInfos: [],
+            ps: '',
+          };
+        } else {
+          // 计算工作日
+          if (payload.dailyInfo.weekData[weekDay].workInfos.length !== 0) {
+            weekDayCount++;
+          }
+          // 分类别计算工作时长
+          categoryOptions.forEach(category => {
+            // 初始化类别总计的值为0
+            if (!weekDailyInfoObj[category.value]) {
+              weekDailyInfoObj[category.value] = 0;
+            }
+            payload.dailyInfo.weekData[weekDay].workInfos.forEach((current: { category: string; cost: number; }) => {
+              if (current.category === category.value) {
+                sumWeekWorkload += current.cost;
+                weekDailyInfoObj[category.value] += current.cost;
+              }
+            });
+          });
+          weekData[weekDay] = {
+            ...payload.dailyInfo.weekData[weekDay],
+          };
+        }
+      });
+      // 有效工作时长
+      const effectiveWorkload = effectiveCategory.reduce((acc, effective) => {
+        return acc + weekDailyInfoObj[effective];
+      }, 0);
+
+      weekDailyInfoObj['weekNum'] = payload.dailyInfo.weekNum;
+      weekDailyInfoObj['timeInterval'] = payload.dailyInfo.timeInterval;
+      weekDailyInfoObj['weekData'] = weekData;
+      weekDailyInfoObj['weekWorkload'] = sumWeekWorkload;
+      weekDailyInfoObj['weekday'] = weekDayCount;
+      weekDailyInfoObj['averageWorkload'] = weekDayCount === 0 ? 0 : Number((sumWeekWorkload / weekDayCount).toFixed(1));
+      weekDailyInfoObj['workSaturation'] = Number((effectiveWorkload / sumWeekWorkload).toFixed(1));
+
+      return yield call(addWeekDaily, weekDailyInfoObj);
+    },
   },
 
   reducers: {
@@ -98,37 +150,38 @@ const AddWeekDailyModel: ModelType = {
           ...state?.dailyInfo,
           weekData: {
             ...state?.dailyInfo.weekData,
-            ...action.payload.dailyInfo,
+            ...action.payload.dailyInfo.weekData,
           }
         },
-        summaryData: [
-          { weekday: 'monday', coding: 0, testing: 0, documentWriting: 0, selfStudying: 0, translate: 0, useless: 0 },
-          { weekday: 'tuesday', coding: 0, testing: 0, documentWriting: 0, selfStudying: 0, translate: 0, useless: 0 },
-          { weekday: 'wednesday', coding: 0, testing: 0, documentWriting: 0, selfStudying: 0, translate: 0, useless: 0 },
-          { weekday: 'thursday', coding: 0, testing: 0, documentWriting: 0, selfStudying: 0, translate: 0, useless: 0 },
-          { weekday: 'friday', coding: 0, testing: 0, documentWriting: 0, selfStudying: 0, translate: 0, useless: 0 },
-          { weekday: 'saturday', coding: 0, testing: 0, documentWriting: 0, selfStudying: 0, translate: 0, useless: 0 },
-          { weekday: 'sunday', coding: 0, testing: 0, documentWriting: 0, selfStudying: 0, translate: 0, useless: 0 },
-        ],
-      }
-    },
-
-    // 更新汇总table的数据
-    saveSummaryData(state, action) {
-      return {
-        ...state,
-        dailyInfo: {
-          ...state?.dailyInfo
-        },
-        summaryData: action.payload.summaryData,
       }
     },
 
     // 清除数据
     clearState(state, action) {
       return {
-        dailyInfo: {},
-        summaryData: [],
+        dailyInfo: {
+          timeInterval: '',
+          weekNum: 0,
+          coding: 0,
+          testing: 0,
+          documentWriting: 0,
+          selfStudying: 0,
+          translate: 0,
+          useless: 0,
+          weekWorkload: 0,
+          weekday: 0,
+          averageWorkload: 0,
+          workSaturation: 0,
+          weekData: {
+            monday: {},
+            tuesday: {},
+            wednesday: {},
+            thursday: {},
+            friday: {},
+            saturday: {},
+            sunday: {},
+          },
+        },
       }
     }
   },
