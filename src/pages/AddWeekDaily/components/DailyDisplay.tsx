@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { EditableProTable, ProColumns } from '@ant-design/pro-table';
 import ProField from '@ant-design/pro-field';
 import { ProFormRadio } from '@ant-design/pro-form';
-import { Dispatch, formatMessage, useIntl } from 'umi';
+import { connect, Dispatch, formatMessage, LoadingType, useIntl } from 'umi';
 import { Button, InputNumber, Select, Table } from 'antd';
 import { DailyInfoType, DayInfoType, WorkInfoType } from '@/pages/WeekDaily/data';
 
@@ -18,35 +18,29 @@ const categoryOptions = [
 
 const columns: ProColumns<WorkInfoType>[] = [
   {
-    title: '事项',
-    dataIndex: 'title',
+    title: '事项', dataIndex: 'title', width: '30%',
     formItemProps: {
       rules: [{ required: true, message: '此项为必填项', }],
     },
-    width: '30%',
   },
   {
-    title: '花费时间', dataIndex: 'cost',
+    title: '花费时间', dataIndex: 'cost', width: '10%',
     renderFormItem: (_, { type, defaultRender, ...rest }, form) => {
       return (
         <InputNumber min={0} max={24} />
       )
     },
-    width: '10%',
   },
   {
-    title: '工作类别', dataIndex: 'category',
+    title: '工作类别', dataIndex: 'category', width: '30%',
     renderFormItem: (_, { type, defaultRender, ...rest }, form) => {
       return (
         <Select options={categoryOptions} />
       )
     },
-    width: '30%',
   },
   {
-    title: '操作',
-    valueType: 'option',
-    width: 200,
+    title: '操作', valueType: 'option', width: 200,
     render: (text, record, _, action) => [
       <a key="editable" onClick={() => { action.startEditable?.(record.id); }}>
         {formatMessage({ id: 'cmn.edit', defaultMessage: '编辑' })}
@@ -59,8 +53,6 @@ const columns: ProColumns<WorkInfoType>[] = [
 interface PropsType {
   // 这一天的数据
   data?: DayInfoType;
-  // 整个state
-  dailyInfo: DailyInfoType;
   // 用来显示的日期
   date: string;
   // 标识是星期几
@@ -68,27 +60,31 @@ interface PropsType {
   dispatch: Dispatch;
 }
 
-export default (props: PropsType) => {
+const DailyDisplay = (props: PropsType) => {
   const [editableKeys, setEditableRowKeys] = useState<React.Key[]>([]);
   const [dataSource, setDataSource] = useState<WorkInfoType[]>([]);
 
   // 更新天的变化数据
   const updateDayInfo = (value: WorkInfoType[]) => {
-    props.dispatch({
-      type: 'addWeekDaily/saveDayInfo',
-      payload: {
-        week: props.week,
-        dailyInfo: {
-          weekData: {
-            [props.week]: {
-              workInfos: value,
-              ps: '', // TODO
-            },
-          }
-        },
-      }
-    });
+    // props.dispatch({
+    //   type: 'addWeekDaily/saveDayInfo',
+    //   payload: {
+    //     week: props.week,
+    //     dailyInfo: {
+    //       weekData: {
+    //         [props.week]: {
+    //           workInfos: value,
+    //           ps: '', // TODO
+    //         },
+    //       }
+    //     },
+    //   }
+    // });
   }
+
+  useEffect(() => {
+    setDataSource(props.data?.workInfos || []);
+  }, []);
 
   return (
     <>
@@ -137,3 +133,5 @@ export default (props: PropsType) => {
     </>
   );
 };
+
+export default connect(({ }) => ({}))(DailyDisplay);
