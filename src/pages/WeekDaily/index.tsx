@@ -75,7 +75,7 @@ const PersonalWeekDaily: React.FC<PropsType> = (props) => {
       dataIndex: '', key: '', width: 120,
       render: (record: DailyInfoType) => <>
         <Space>
-          <Link to={`/weekDaily/${record.weekNum}`}>
+          <Link to={`/weekDaily/edit/${record.weekNum}`}>
             <Button type="primary">{formatMessage({ id: 'cmn.edit', defaultMessage: '编辑' })}</Button></Link>
           <Popconfirm
             title={formatMessage({ id: 'weekDaily.deleteConfirmMessage', defaultMessage: `你确定要删除第${record.weekNum}周的周报吗？` },
@@ -149,7 +149,7 @@ const PersonalWeekDaily: React.FC<PropsType> = (props) => {
           <Upload {...uploadProps}>
             <Button icon={<UploadOutlined />}>{formatMessage({ id: 'weekDaily.import', defaultMessage: '导入周报' })}</Button>
           </Upload>
-          <Link to='weekDaily/add' style={{ marginTop: '10px' }}>
+          <Link to='/weekDaily/add' style={{ marginTop: '10px' }}>
             <Button type="primary">{formatMessage({ id: 'weekDaily.add', defaultMessage: '新增周报' })}</Button>
           </Link>
         </Space>
