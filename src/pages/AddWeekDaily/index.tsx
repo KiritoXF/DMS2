@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { PageContainer } from '@ant-design/pro-layout';
-import { Card, Row, Col, Image, Menu, Dropdown, Button, Select, Table, Upload, DatePicker, InputNumber, Space, Divider, Tabs } from 'antd';
+import { Card, Row, Col, Image, Menu, Dropdown, Button, Select, Table, Upload, DatePicker, InputNumber, Space, Divider, Tabs, message } from 'antd';
 import { useIntl, Link, Dispatch, connect, LoadingType, useParams, history } from 'umi';
 import { UploadOutlined } from '@ant-design/icons';
 import moment, { Moment } from 'moment';
@@ -120,6 +120,26 @@ const Daily: React.FC<PropsType> = (props) => {
       payload: {
         dailyInfo,
         updateFlg: !!param.weekNum
+      }
+    }).then(({ status }) => {
+      if (status === 400) {
+        message.error({
+          key: 'saveWeekDailyDuplicate',
+          duration: 2,
+          content: formatMessage({ id: 'addWeekDaily.duplicate', defaultMessage: `已经存在周报${dailyInfo.weekNum}，请检查` },
+            { weekNum: param.weekNum })
+        })
+      } else {
+        message.success({
+          key: 'saveWeekDailySuccess',
+          duration: 2,
+          content: param.weekNum
+            ? formatMessage({ id: 'addWeekDaily.updateSuccess', defaultMessage: `更新周报${param.weekNum}成功` },
+              { weekNum: param.weekNum })
+            : formatMessage({ id: 'addWeekDaily.createSuccess', defaultMessage: `新增周报${dailyInfo.weekNum}成功` },
+              { weekNum: param.weekNum })
+        });
+        history.push('/weekDaily');
       }
     });
   }

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { PageContainer } from '@ant-design/pro-layout';
-import { Card, Row, Col, Image, Menu, Dropdown, Button, Select, Table, Upload, Space, Divider } from 'antd';
+import { Card, Row, Col, Image, Menu, Dropdown, Button, Select, Table, Upload, Space, Divider, message, Popconfirm } from 'antd';
 import { useIntl, Link, Dispatch, connect, LoadingType } from 'umi';
 import { DailyInfoType, WeekDailyType } from './data';
 import './index.less';
@@ -23,6 +23,24 @@ const PersonalWeekDaily: React.FC<PropsType> = (props) => {
 
   // 导入的CSV文件
   const [fileList, setFileList] = useState([]);
+
+  // 删除某一周的周报 
+  const deleteWeekDaily = (weekNum: number) => {
+    dispatch({
+      type: 'weekDaily/deleteWeekDaily',
+      payload: {
+        weekNum,
+      }
+    }).then(() => {
+      message.success({
+        key: 'deleteWeekDailySuccess',
+        duration: 2,
+        content: formatMessage({ id: 'weekDaily.deleteSuccess', defaultMessage: `成功删除了第${weekNum}周的周报` },
+          { weekNum }),
+      });
+      getWeekDailyList();
+    });
+  }
 
   // 周报表头
   const tableColumns = [
@@ -59,7 +77,15 @@ const PersonalWeekDaily: React.FC<PropsType> = (props) => {
         <Space>
           <Link to={`/weekDaily/${record.weekNum}`}>
             <Button type="primary">{formatMessage({ id: 'cmn.edit', defaultMessage: '编辑' })}</Button></Link>
-          <Button danger size="small">{formatMessage({ id: 'cmn.delete', defaultMessage: '删除' })}</Button>
+          <Popconfirm
+            title={formatMessage({ id: 'weekDaily.deleteConfirmMessage', defaultMessage: `你确定要删除第${record.weekNum}周的周报吗？` },
+              { weekNum: record.weekNum })}
+            onConfirm={() => deleteWeekDaily(record.weekNum)}
+            okText={formatMessage({ id: 'cmn.yes', defaultMessage: '是' })}
+            cancelText={formatMessage({ id: 'cmn.no', defaultMessage: '否' })}
+          >
+            <Button danger>{formatMessage({ id: 'cmn.delete', defaultMessage: '删除' })}</Button>
+          </Popconfirm>
         </Space>
       </>,
     },
@@ -86,13 +112,18 @@ const PersonalWeekDaily: React.FC<PropsType> = (props) => {
     fileList,
   };
 
-  // 初始化
-  useEffect(() => {
+  // 获取周报列表
+  const getWeekDailyList = () => {
     dispatch({
       type: 'weekDaily/getWeekDailyList',
     }).then((length: number) => {
       setEndIndex(length - 1);
     });
+  }
+
+  // 初始化
+  useEffect(() => {
+    getWeekDailyList();
   }, []);
 
   const exportDailyInfo = () => {

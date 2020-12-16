@@ -1,4 +1,4 @@
-import { exportDailyInfo, getWeekDailyList, importDailyInfo } from '@/services/daily';
+import { deleteWeekDaily, exportDailyInfo, getWeekDailyList, importDailyInfo } from '@/services/daily';
 import { Effect, Reducer } from 'umi';
 import { DailyInfoType, WeekDailyType } from './data';
 
@@ -7,6 +7,7 @@ export interface ModelType {
   state: WeekDailyType;
   effects: {
     getWeekDailyList: Effect;
+    deleteWeekDaily: Effect;
     importDailyInfo: Effect;
     exportDailyInfo: Effect;
   };
@@ -43,6 +44,11 @@ const Model: ModelType = {
         }
       });
       return infos.length;
+    },
+
+    // 删除某一周的周报
+    *deleteWeekDaily({ payload }, { call, put }) {
+      return yield call(deleteWeekDaily, payload);
     },
 
     // 导入CSV文件

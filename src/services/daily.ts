@@ -1,3 +1,4 @@
+// @ts-nocheck
 import request from '@/utils/request';
 import Dexie from 'dexie';
 import XLSX from "xlsx";
@@ -91,13 +92,25 @@ export async function getLatestWeekNum(): Promise<any> {
 // 更新某一周的周报
 export async function updateWeekDaily(param: any): Promise<any> {
   const db = openDailyTable();
-  const id = await db.originInfo.get({ weekNum: param.weekNum });
-  await db.originInfo.update(id, param);
+  const info = await getWeekDailyInfo(param);
+  return await db.originInfo.update(info.id, param);
 }
 
 // 新增某一周的周报
 export async function addWeekDaily(param: any): Promise<any> {
   const db = openDailyTable();
-  debugger;
-  await db.originInfo.add(param);
+  const info = await getWeekDailyInfo(param);
+  if (!info?.id) {
+    await db.originInfo.add(param);
+    return { status: 200 };
+  }
+  // 已经有这一周的周报时报错 TODO: 以周号作为唯一判断是不是不太好？
+  return { status: 400 };
+}
+
+// 删除某一周的周报
+export async function deleteWeekDaily(param: any): Promise<any> {
+  const db = openDailyTable();
+  const info = await getWeekDailyInfo(param);
+  return await db.originInfo.delete(info.id);
 }
