@@ -115,19 +115,11 @@ const Daily: React.FC<PropsType> = (props) => {
   // 保存当周的周报
   const saveWeekDaily = () => {
     // 更新
-    if (param.weekNum) {
-      return dispatch({
-        type: 'addWeekDaily/updateWeekDaily',
-        payload: {
-          dailyInfo,
-        }
-      });
-    }
-    // 新建
     return dispatch({
-      type: 'addWeekDaily/addWeekDaily',
+      type: 'addWeekDaily/saveWeekDaily',
       payload: {
         dailyInfo,
+        updateFlg: !!param.weekNum
       }
     });
   }
@@ -154,7 +146,7 @@ const Daily: React.FC<PropsType> = (props) => {
           </Space>
         }
         <Space>
-          <Button type="primary" onClick={saveWeekDaily}>{formatMessage({ id: 'cmn.save', defaultMessage: '保存' })}</Button>
+          <Button type="primary" onClick={() => saveWeekDaily()}>{formatMessage({ id: 'cmn.save', defaultMessage: '保存' })}</Button>
           <Link to="/weekDaily"><Button>{formatMessage({ id: 'cmn.back', defaultMessage: '返回' })}</Button></Link>
         </Space>
         <Divider />

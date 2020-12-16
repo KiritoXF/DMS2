@@ -66,20 +66,18 @@ const DailyDisplay = (props: PropsType) => {
 
   // 更新天的变化数据
   const updateDayInfo = (value: WorkInfoType[]) => {
-    // props.dispatch({
-    //   type: 'addWeekDaily/saveDayInfo',
-    //   payload: {
-    //     week: props.week,
-    //     dailyInfo: {
-    //       weekData: {
-    //         [props.week]: {
-    //           workInfos: value,
-    //           ps: '', // TODO
-    //         },
-    //       }
-    //     },
-    //   }
-    // });
+    props.dispatch({
+      type: 'addWeekDaily/saveDayInfo',
+      payload: {
+        week: props.week,
+        weekData: {
+          [props.week]: {
+            workInfos: value,
+            ps: '', // TODO
+          },
+        },
+      }
+    });
   }
 
   useEffect(() => {

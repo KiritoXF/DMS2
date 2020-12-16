@@ -85,18 +85,19 @@ export async function getWeekDailyInfo(param: any): Promise<any> {
 // 获取最新的周号
 export async function getLatestWeekNum(): Promise<any> {
   const db = openDailyTable();
-  return db.originInfo.toCollection().last();
+  return await db.originInfo.toCollection().last();
 }
 
 // 更新某一周的周报
 export async function updateWeekDaily(param: any): Promise<any> {
   const db = openDailyTable();
-  db.originInfo.update(param.id, { ...param });
+  const id = await db.originInfo.get({ weekNum: param.weekNum });
+  await db.originInfo.update(id, param);
 }
 
 // 新增某一周的周报
 export async function addWeekDaily(param: any): Promise<any> {
   const db = openDailyTable();
   debugger;
-  db.originInfo.add(param);
+  await db.originInfo.add(param);
 }

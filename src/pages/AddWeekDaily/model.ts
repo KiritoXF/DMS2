@@ -7,8 +7,7 @@ export interface ModelType {
   state: AddWeekDailyType;
   effects: {
     getWeekDailyInfo: Effect;
-    updateWeekDaily: Effect;
-    addWeekDaily: Effect;
+    saveWeekDaily: Effect;
   };
   reducers: {
     saveDailyInfo: Reducer<AddWeekDailyType>;
@@ -55,13 +54,8 @@ const AddWeekDailyModel: ModelType = {
       })
     },
 
-    // 更新某一周的周报信息
-    *updateWeekDaily({ payload }, { call, put }) {
-      return yield call(updateWeekDaily, payload.dailyInfo);
-    },
-
-    // 新增一周的周报信息
-    *addWeekDaily({ payload }, { call, put }) {
+    // 新增或更新一周的周报信息
+    *saveWeekDaily({ payload }, { call, put }) {
       const weekDailyInfoObj = {};
       // 类别 TODO:稍后抽作共通 TOTODO:读配置
       const categoryOptions = [
@@ -127,7 +121,11 @@ const AddWeekDailyModel: ModelType = {
       weekDailyInfoObj['averageWorkload'] = weekDayCount === 0 ? 0 : Number((sumWeekWorkload / weekDayCount).toFixed(1));
       weekDailyInfoObj['workSaturation'] = Number((effectiveWorkload / sumWeekWorkload).toFixed(1));
 
-      return yield call(addWeekDaily, weekDailyInfoObj);
+      // 新建的情况
+      if (!payload.updateFlg) {
+        return yield call(addWeekDaily, weekDailyInfoObj);
+      }
+      return yield call(updateWeekDaily, weekDailyInfoObj);
     },
   },
 
