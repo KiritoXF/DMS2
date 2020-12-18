@@ -37,7 +37,7 @@ export default defineConfig({
   title: false,
   ignoreMomentLocale: true,
   proxy: proxy[REACT_APP_ENV || 'dev'],
-  // publicPath: './',
+  // publicPath: '/DMS2_demo/',
   manifest: {
     basePath: '/',
   },
