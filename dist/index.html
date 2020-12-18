@@ -25,6 +25,16 @@
     <link rel="icon" href="/DMS2/favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="/DMS2/umi.001760ca.css" />
     <script>
+      // 这段代码要放在其他js的前面
+      (function(){
+        var redirect = sessionStorage.redirect;
+        delete sessionStorage.redirect;
+        if (redirect && redirect != location.href) {
+          history.replaceState(null, null, redirect);
+        }
+      })();
+    </script>
+    <script>
       window.routerBase = "/";
     </script>
     <script>
