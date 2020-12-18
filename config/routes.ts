@@ -94,12 +94,6 @@
             ],
           },
           {
-            name: 'list.table-list',
-            icon: 'table',
-            path: '/list',
-            component: './ListTableList',
-          },
-          {
             component: './404',
           },
         ],

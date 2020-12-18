@@ -37,9 +37,11 @@ export default defineConfig({
   title: false,
   ignoreMomentLocale: true,
   proxy: proxy[REACT_APP_ENV || 'dev'],
+  // publicPath: './',
   manifest: {
     basePath: '/',
   },
-  exportStatic: {},
+  // outputPath: '/dist',
+  // exportStatic: {},
   esbuild: {},
 });
