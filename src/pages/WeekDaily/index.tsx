@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { PageContainer } from '@ant-design/pro-layout';
-import { Card, Row, Col, Image, Menu, Dropdown, Button, Select, Table, Upload, Space, Divider, message, Popconfirm } from 'antd';
+import { Button, Select, Table, Upload, Space, Divider, message, Popconfirm } from 'antd';
 import { useIntl, Link, Dispatch, connect, LoadingType } from 'umi';
 import { DailyInfoType, WeekDailyType } from './data';
 import './index.less';
@@ -52,7 +52,7 @@ const PersonalWeekDaily: React.FC<PropsType> = (props) => {
       title: formatMessage({ id: 'weekDaily.weekNum', defaultMessage: '周数' }),
       dataIndex: 'weekNum', key: 'weekNum', width: 65,
       sorter: (a: DailyInfoType, b: DailyInfoType) => a.weekNum - b.weekNum,
-      sortDirections: ['descend', 'ascend'],
+      sortDirections: ['ascend'],
     },
     {
       title: formatMessage({ id: 'weekDaily.workContent', defaultMessage: '工作内容' }),
@@ -66,10 +66,30 @@ const PersonalWeekDaily: React.FC<PropsType> = (props) => {
         { title: formatMessage({ id: 'weekDaily.useless', defaultMessage: '准备工作' }), dataIndex: 'useless', key: 'useless', },
       ],
     },
-    { title: formatMessage({ id: 'weekDaily.weekWorkload', defaultMessage: '本周工作量' }), dataIndex: 'weekWorkload', key: 'weekWorkload', },
-    { title: formatMessage({ id: 'weekDaily.weekday', defaultMessage: '工作日' }), dataIndex: 'weekday', key: 'weekday', },
-    { title: formatMessage({ id: 'weekDaily.averageWorkload', defaultMessage: '日均工作量' }), dataIndex: 'averageWorkload', key: 'averageWorkload', },
-    { title: formatMessage({ id: 'weekDaily.workSaturation', defaultMessage: '工作饱和度' }), dataIndex: 'workSaturation', key: 'workSaturation', },
+    {
+      title: formatMessage({ id: 'weekDaily.weekWorkload', defaultMessage: '本周工作量' }), dataIndex: 'weekWorkload', key: 'weekWorkload',
+      onCell: (record: DailyInfoType) => {
+        return { className: record.weekWorkload <= 40 ? 'ok-work' : 'over-work' }
+      }
+    },
+    {
+      title: formatMessage({ id: 'weekDaily.weekday', defaultMessage: '工作日' }), dataIndex: 'weekday', key: 'weekday',
+      onCell: (record: DailyInfoType) => {
+        return { className: record.weekday <= 5 ? 'ok-work' : 'over-work' }
+      }
+    },
+    {
+      title: formatMessage({ id: 'weekDaily.averageWorkload', defaultMessage: '日均工作量' }), dataIndex: 'averageWorkload', key: 'averageWorkload',
+      onCell: (record: DailyInfoType) => {
+        return { className: record.averageWorkload <= 8 ? 'ok-work' : 'over-work' }
+      }
+    },
+    {
+      title: formatMessage({ id: 'weekDaily.workSaturation', defaultMessage: '工作饱和度' }), dataIndex: 'workSaturation', key: 'workSaturation',
+      render: (workSaturation: number) => {
+        return `${workSaturation * 100}%`
+      }
+    },
     {
       title: formatMessage({ id: 'weekDaily.operation', defaultMessage: '操作' }),
       dataIndex: '', key: '', width: 120,
@@ -136,7 +156,7 @@ const PersonalWeekDaily: React.FC<PropsType> = (props) => {
         header: tableColumns,
         fileName: `${weekDaily.startList[startIndex].label.split('-')[0]}`
           + `-${weekDaily.endList[endIndex].label.split('-')[1]}`
-          + `${formatMessage({ id: 'weekDaily.weekDaily', defaultMessage: '周报.csv' })}`,
+          + `${formatMessage({ id: 'weekDaily.weekDaily', defaultMessage: '周报.xlsx' })}`,
       }
     });
   }

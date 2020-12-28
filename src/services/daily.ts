@@ -67,14 +67,14 @@ export async function importDailyInfo(param: any): Promise<any> {
 export async function exportDailyInfo(param: any): Promise<any> {
   const wb = XLSX.utils.book_new();
   const ws = XLSX.utils.json_to_sheet(param.weekDailyList, param.header);
-  XLSX.utils.book_append_sheet(wb, ws, "SheetJS");
+  XLSX.utils.book_append_sheet(wb, ws, "data");
   XLSX.writeFile(wb, param.fileName);
 }
 
 // 获取所有周报信息
 export async function getWeekDailyList(): Promise<any> {
   const db = openDailyTable();
-  return await db.originInfo.toArray();
+  return await db.originInfo.toCollection().desc().toArray();
 }
 
 // 获取某一周的周报信息
