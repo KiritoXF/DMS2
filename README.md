@@ -8,6 +8,8 @@ Daily Management System 2.0
 ## Demo
 https://kiritoxf.github.io/
 
+目前打完的包 demo 有点问题，建议本地启动使用。
+
 ## 安装依赖
 
 Install `node_modules`:
