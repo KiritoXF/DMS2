@@ -2,6 +2,7 @@ import React from 'react';
 import { PageContainer } from '@ant-design/pro-layout';
 import { Card, Row, Col, Image, Menu, Dropdown } from 'antd';
 import { useIntl, Link } from 'umi';
+import TimeProgress from './components/TimeProgress';
 
 // Card右上角的额外操作，目前未实装具体的功能
 const cardExtra = (
@@ -55,7 +56,8 @@ export default (): React.ReactNode => {
           </Card>
         </Col>
       </Row>
-
+      <h2>{formatMessage({ id: 'welcome.timeProgress', defaultMessage: '时间进度条' })}</h2>
+      <TimeProgress />
     </PageContainer>
   );
 };
