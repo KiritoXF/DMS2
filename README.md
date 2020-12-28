@@ -1,9 +1,14 @@
 # DMS2
 Daily Management System 2.0
 
-使用 antdesign pro 脚手架搭建，采用 React + Ant Design4 + Umi + DvaJS 重构的个人日报管理系统。
+使用 antdesign pro 脚手架搭建，采用 React + Ant Design4 + Umi + DvaJS 构建的个人日报管理系统。
 
-[demo地址](https://kiritoxf.github.io/DMS2/) (目前有一些问题，比如不能刷新、进去后要手动点导航栏)
+数据存在 IndexedDB 里，可以在 F12 的 Application 里找到。
+
+## Demo
+https://kiritoxf.github.io/
+
+目前打完的包 demo 有点问题，建议本地启动使用。
 
 ## 安装依赖
 
