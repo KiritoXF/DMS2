@@ -1,4 +1,4 @@
-import { deleteWeekDaily, exportDailyInfo, getWeekDailyList, importDailyInfo } from '@/services/daily';
+import { deleteWeekDaily, exportDailyInfo, getWeekDailyListDesc, importDailyInfo } from '@/services/daily';
 import { Effect, Reducer } from 'umi';
 import { DailyInfoType, WeekDailyType } from './data';
 
@@ -29,7 +29,8 @@ const Model: ModelType = {
   effects: {
     // 获取所有周报的信息
     *getWeekDailyList({ payload }, { call, put }) {
-      const infos = yield call(getWeekDailyList, payload);
+      // 使用倒序的
+      const infos = yield call(getWeekDailyListDesc, payload);
       const startList = infos.map((info: DailyInfoType) => {
         return {
           label: info.timeInterval,

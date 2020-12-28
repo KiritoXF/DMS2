@@ -74,6 +74,12 @@ export async function exportDailyInfo(param: any): Promise<any> {
 // 获取所有周报信息
 export async function getWeekDailyList(): Promise<any> {
   const db = openDailyTable();
+  return await db.originInfo.toArray();
+}
+
+// 获取所有周报信息-倒序 TODO: 有没有更巧妙的方法？
+export async function getWeekDailyListDesc(): Promise<any> {
+  const db = openDailyTable();
   return await db.originInfo.toCollection().desc().toArray();
 }
 
