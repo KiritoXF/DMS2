@@ -1,6 +1,5 @@
 import React from 'react';
-import { PageContainer } from '@ant-design/pro-layout';
-import { Card, Row, Col, Menu, Dropdown } from 'antd';
+import { Card, Row, Col, Menu, Dropdown, Divider } from 'antd';
 import { useIntl, Link } from 'umi';
 import TimeProgress from './components/TimeProgress';
 import PersonalNavigation from './components/PersonalNavigation';
@@ -51,6 +50,7 @@ export default (): React.ReactNode => {
           </Card>
         </Col>
       </Row>
+      <Divider />
       {/* 时间进度条 */}
       <TimeProgress />
     </>

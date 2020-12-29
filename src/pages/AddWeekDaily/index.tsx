@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { PageContainer } from '@ant-design/pro-layout';
-import { Card, Row, Col, Image, Menu, Dropdown, Button, Select, Table, Upload, DatePicker, InputNumber, Space, Divider, Tabs, message } from 'antd';
+import { Button, DatePicker, InputNumber, Space, Divider, Tabs, message } from 'antd';
 import { useIntl, Link, Dispatch, connect, LoadingType, useParams, history } from 'umi';
-import { UploadOutlined } from '@ant-design/icons';
 import moment, { Moment } from 'moment';
 import DailyDisplay from './components/DailyDisplay';
 import { DailyInfoType } from '../WeekDaily/data';

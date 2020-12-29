@@ -26,7 +26,7 @@
           {
             path: '/welcome',
             name: 'welcome',
-            icon: 'smile',
+            icon: 'home',
             component: './Welcome',
           },
           {
@@ -41,38 +41,33 @@
           },
           {
             path: '/weekDaily/analysis',
-            icon: 'chart',
             component: './DailyAnalysis',
           },
           {
             path: '/weekDaily',
             name: 'daily',
-            icon: 'smile',
+            icon: 'calendar',
             routes: [
               {
                 path: '/weekDaily',
                 name: 'weekDaily',
-                icon: 'smile',
                 component: './WeekDaily',
               },
               {
                 path: '/weekDaily/add',
                 name: 'weekDaily add',
-                icon: 'add',
                 hideInMenu: true,
                 component: './AddWeekDaily',
               },
               {
                 path: '/weekDaily/edit/:weekNum',
                 name: 'weekDaily edit',
-                icon: 'edit',
                 hideInMenu: true,
                 component: './AddWeekDaily',
               },
               {
                 path: '/weekDaily/analysis',
                 name: 'chart',
-                icon: 'chart',
                 component: './DailyAnalysis',
               },
             ]

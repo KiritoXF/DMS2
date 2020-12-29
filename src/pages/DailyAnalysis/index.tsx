@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { PageContainer } from '@ant-design/pro-layout';
 import { Spin, Tabs } from 'antd';
 import { useIntl, Dispatch, connect, LoadingType } from 'umi';
 import WorkloadCategoryChart from './components/WorkloadCategoryChart';

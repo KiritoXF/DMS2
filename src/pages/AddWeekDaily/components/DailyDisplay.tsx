@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { EditableProTable, ProColumns } from '@ant-design/pro-table';
-import ProField from '@ant-design/pro-field';
-import { ProFormRadio } from '@ant-design/pro-form';
-import { connect, Dispatch, formatMessage, LoadingType, useIntl } from 'umi';
-import { Button, InputNumber, Select, Table } from 'antd';
-import { DailyInfoType, DayInfoType, WorkInfoType } from '@/pages/WeekDaily/data';
+import { connect, Dispatch, formatMessage } from 'umi';
+import { InputNumber, Select, Table } from 'antd';
+import { DayInfoType, WorkInfoType } from '@/pages/WeekDaily/data';
 
 // 工作类别 TODO: 从配置中获取
 const categoryOptions = [

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { PageContainer } from '@ant-design/pro-layout';
 import { Button, Select, Table, Upload, Space, Divider, message, Popconfirm } from 'antd';
 import { useIntl, Link, Dispatch, connect, LoadingType } from 'umi';
 import { DailyInfoType, WeekDailyType } from './data';
