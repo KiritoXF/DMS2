@@ -1,0 +1,20 @@
+{
+  "navigationList": [
+    {
+      "title": "SegmentFault",
+      "href": "https://segmentfault.com"
+    },
+    {
+      "title": "Juejin",
+      "href": "https://juejin.im/"
+    },
+    {
+      "title": "V2ex",
+      "href": "https://www.v2ex.com/"
+    },
+    {
+      "title": "GitHub",
+      "href": "https://github.com/"
+    }
+  ]
+}

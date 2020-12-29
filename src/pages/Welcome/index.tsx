@@ -1,8 +1,9 @@
 import React from 'react';
 import { PageContainer } from '@ant-design/pro-layout';
-import { Card, Row, Col, Image, Menu, Dropdown } from 'antd';
+import { Card, Row, Col, Menu, Dropdown } from 'antd';
 import { useIntl, Link } from 'umi';
 import TimeProgress from './components/TimeProgress';
+import PersonalNavigation from './components/PersonalNavigation';
 
 // Card右上角的额外操作，目前未实装具体的功能
 const cardExtra = (
@@ -41,22 +42,16 @@ export default (): React.ReactNode => {
         </Col>
       </Row>
       <Row>
-        <Col span={12} style={{ padding: '0 10px' }}>
-          {/* TODO: read from config file */}
-          <Card title={formatMessage({ id: 'welcome.navigation', defaultMessage: '导航' })}>
-            <Image width={200} src="../../assets/sifou.png" onClick={() => window.open("https://segmentfault.com/")} />
-            <Image width={200} src="../../assets/juejin.png" onClick={() => window.open("https://juejin.im/")} />
-            <Image width={200} src="../../assets/v2ex.png" onClick={() => window.open("https://www.v2ex.com/")} />
-            <Image width={200} src="../../assets/github.png" onClick={() => window.open("https://https://github.com/")} />
-          </Card>
-        </Col>
+        {/* 个人导航 */}
+        <Col span={12} style={{ padding: '0 10px' }}><PersonalNavigation /></Col>
+        {/* TODO */}
         <Col span={12}>
           <Card title={formatMessage({ id: 'welcome.todo', defaultMessage: '待处理' })} >
             <p>{formatMessage({ id: 'welcome.nothing.todo', defaultMessage: '目前没有待处理的任务' })}</p>
           </Card>
         </Col>
       </Row>
-      <h2>{formatMessage({ id: 'welcome.timeProgress', defaultMessage: '时间进度条' })}</h2>
+      {/* 时间进度条 */}
       <TimeProgress />
     </PageContainer>
   );

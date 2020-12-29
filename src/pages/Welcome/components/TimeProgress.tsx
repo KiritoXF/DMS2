@@ -1,22 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import { EditableProTable, ProColumns } from '@ant-design/pro-table';
-import ProField from '@ant-design/pro-field';
-import { ProFormRadio } from '@ant-design/pro-form';
-import { connect, Dispatch, formatMessage, LoadingType, useIntl } from 'umi';
-import { Button, InputNumber, Row, Col, Select, Table, Card, Progress } from 'antd';
-import { DailyInfoType, DayInfoType, WorkInfoType } from '@/pages/WeekDaily/data';
+import { connect, useIntl } from 'umi';
+import { Row, Col, Card, Progress } from 'antd';
 import moment from 'moment';
 
-// 入参类型
-interface PropsType {
-  dispatch: Dispatch;
-}
+const TimeProgress = () => {
 
-const TimeProgress = (props: PropsType) => {
-
-  const currentDate = new Date();
+  const [currentDate, setCurrentDate] = useState<Date>(new Date());
 
   const { formatMessage } = useIntl();
+
+  // 初始化时注册每隔一分钟更新currentDate
+  useEffect(() => {
+    setTimeout(() => {
+      setCurrentDate(new Date());
+    }, 1000 * 60);
+  });
 
   // 将进度转换为进度条控件需要的格式
   const transProgress = (progress: number) => {
@@ -92,7 +90,8 @@ const TimeProgress = (props: PropsType) => {
 
   return (
     <>
-      <Row>
+      <h2>{formatMessage({ id: 'welcome.timeProgress', defaultMessage: '时间进度条' })}</h2>
+      <Row gutter={4}>
         <Col span={6}>
           <Card>
             <h2>{formatMessage({ id: 'timeProgress.year', defaultMessage: '年' })}</h2>
@@ -100,7 +99,7 @@ const TimeProgress = (props: PropsType) => {
             <label>
               {formatMessage({
                 id: 'timeProgress.beforeEndYear',
-                defaultMessage: `${currentDate.getFullYear()}年还有${getYearRestDays()}天结束`
+                defaultMessage: `距离 ${currentDate.getFullYear()} 年结束还有 ${getYearRestDays()} 天`
               }, { target: currentDate.getFullYear(), count: getYearRestDays() })}
             </label>
           </Card>
@@ -112,7 +111,7 @@ const TimeProgress = (props: PropsType) => {
             <label>
               {formatMessage({
                 id: 'timeProgress.beforeEndMonth',
-                defaultMessage: `距离本月结束还有${getMonthRestDays()}天`
+                defaultMessage: `距离本月结束还有 ${getMonthRestDays()} 天`
               }, { count: getMonthRestDays() })}
             </label>
           </Card>
@@ -124,7 +123,7 @@ const TimeProgress = (props: PropsType) => {
             <label>
               {formatMessage({
                 id: 'timeProgress.beforeEndWeek',
-                defaultMessage: `距离本周结束还有${getWeekRestDays()}天`
+                defaultMessage: `距离本周结束还有 ${getWeekRestDays()} 天`
               }, { count: getWeekRestDays() })}
             </label>
           </Card>
@@ -136,7 +135,7 @@ const TimeProgress = (props: PropsType) => {
             <label>
               {formatMessage({
                 id: 'timeProgress.beforeEndDay',
-                defaultMessage: `距离今天结束还有大约${getDayRestHours()}小时`
+                defaultMessage: `距离今天结束还有大约 ${getDayRestHours()} 小时`
               }, { count: getDayRestHours() })}
             </label>
           </Card>
