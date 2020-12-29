@@ -20,7 +20,7 @@ const cardExtra = (
 export default (): React.ReactNode => {
   const { formatMessage } = useIntl();
   return (
-    <PageContainer>
+    <>
       <h2>{formatMessage({ id: 'welcome.title', defaultMessage: '欢迎界面' })}</h2>
       <Row>
         <Col span={12} style={{ padding: '0 10px' }}>
@@ -53,6 +53,6 @@ export default (): React.ReactNode => {
       </Row>
       {/* 时间进度条 */}
       <TimeProgress />
-    </PageContainer>
+    </>
   );
 };

@@ -145,7 +145,7 @@ const Daily: React.FC<PropsType> = (props) => {
   }
 
   return (
-    <PageContainer>
+    <>
       <Space direction="vertical" style={{ width: '100%' }}>
         <Space>
           <span>{formatMessage({ id: 'addWeekDaily.selectWeekRange', defaultMessage: '选择本周' })}</span>
@@ -194,7 +194,7 @@ const Daily: React.FC<PropsType> = (props) => {
           </TabPane>
         </Tabs>
       </Space>
-    </PageContainer>
+    </>
   );
 };
 

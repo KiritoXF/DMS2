@@ -29,7 +29,7 @@ const DailyAnalysis: React.FC<PropsType> = (props) => {
   }, []);
 
   return (
-    <PageContainer>
+    <>
       <h2>{formatMessage({ id: 'dailyAnalysis.title', defaultMessage: '周报分析' })}</h2>
       <Spin spinning={loading}>
         <Tabs defaultActiveKey="1" centered>
@@ -47,7 +47,7 @@ const DailyAnalysis: React.FC<PropsType> = (props) => {
           </Tabs.TabPane>
         </Tabs>
       </Spin>
-    </PageContainer>
+    </>
   );
 };
 

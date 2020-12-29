@@ -162,7 +162,7 @@ const PersonalWeekDaily: React.FC<PropsType> = (props) => {
   }
 
   return (
-    <PageContainer>
+    <>
       <h2>{formatMessage({ id: 'weekDaily.title', defaultMessage: '我的周报' })}</h2>
       <Space direction="vertical">
         <Space>
@@ -198,7 +198,7 @@ const PersonalWeekDaily: React.FC<PropsType> = (props) => {
         size="middle"
         loading={loading}
       />
-    </PageContainer>
+    </>
   );
 };
 
