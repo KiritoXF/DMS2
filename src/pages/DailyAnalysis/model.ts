@@ -1,4 +1,5 @@
 import { getWeekDailyList } from '@/services/daily';
+import { getWorkCategoryList } from '@/utils/utils';
 import { Effect, Reducer } from 'umi';
 import { DailyAnalysisStateType, DailyInfoType } from './data';
 
@@ -29,15 +30,8 @@ const Model: ModelType = {
       const weekDailyList: DailyInfoType[] = yield call(getWeekDailyList, payload);
       // 处理四个图表用的数据，然后put
 
-      // 类别 TODO:稍后抽作共通 TOTODO:读配置
-      const categoryOptions = [
-        { label: '编码', value: 'coding', },
-        { label: '测试', value: 'testing' },
-        { label: '文档编写', value: 'documentWriting' },
-        { label: '自学', value: 'selfStudying' },
-        { label: '翻译', value: 'translate' },
-        { label: '准备工作', value: 'useless' },
-      ];
+      // 类别
+      const categoryOptions = getWorkCategoryList();
 
       // 用于临时存储各种类的工作时长
       const categoryDataObj = {};

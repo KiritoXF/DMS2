@@ -16,5 +16,40 @@
       "title": "GitHub",
       "href": "https://github.com/"
     }
+  ],
+  "workCategoryList": [
+    {
+      "label": "category.coding",
+      "defaultMessage": "编码",
+      "value": "coding",
+      "effective": true
+    },
+    {
+      "label": "category.testing",
+      "defaultMessage": "测试",
+      "value": "testing",
+      "effective": true
+    },
+    {
+      "label": "category.documentWriting",
+      "defaultMessage": "文档编写",
+      "value": "documentWriting",
+      "effective": true
+    },
+    {
+      "label": "category.selfStudying",
+      "defaultMessage": "自学",
+      "value": "selfStudying"
+    },
+    {
+      "label": "category.translate",
+      "defaultMessage": "翻译",
+      "value": "translate"
+    },
+    {
+      "label": "category.useless",
+      "defaultMessage": "准备工作",
+      "value": "useless"
+    }
   ]
 }

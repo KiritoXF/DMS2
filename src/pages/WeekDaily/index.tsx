@@ -119,7 +119,6 @@ const PersonalWeekDaily: React.FC<PropsType> = (props) => {
     },
     beforeUpload: (file: any) => {
       setFileList([file]);
-      // todo: deal with csv
       dispatch({
         type: 'weekDaily/importDailyInfo',
         payload: {

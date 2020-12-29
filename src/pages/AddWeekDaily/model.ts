@@ -1,4 +1,5 @@
 import { addWeekDaily, getWeekDailyInfo, updateWeekDaily } from '@/services/daily';
+import { getEffectiveCategoryList, getWorkCategoryList } from '@/utils/utils';
 import { Effect, Reducer } from 'umi';
 import { AddWeekDailyType } from './data';
 
@@ -57,17 +58,10 @@ const AddWeekDailyModel: ModelType = {
     // 新增或更新一周的周报信息
     *saveWeekDaily({ payload }, { call, put }) {
       const weekDailyInfoObj = {};
-      // 类别 TODO:稍后抽作共通 TOTODO:读配置
-      const categoryOptions = [
-        { label: '编码', value: 'coding', },
-        { label: '测试', value: 'testing' },
-        { label: '文档编写', value: 'documentWriting' },
-        { label: '自学', value: 'selfStudying' },
-        { label: '翻译', value: 'translate' },
-        { label: '准备工作', value: 'useless' },
-      ];
+      // 工作类别
+      const categoryOptions = getWorkCategoryList();
       // 有效的工作类别 TODO:工作效率weekWorkload的结果最好不往db存吧？直接在前台计算显示就行，这样可拓展性更高一点
-      const effectiveCategory = ['coding', 'testing', 'documentWriting'];
+      const effectiveCategory = getEffectiveCategoryList();
 
       const weekData = {};
       // 该周的总工作量
@@ -110,7 +104,7 @@ const AddWeekDailyModel: ModelType = {
       });
       // 有效工作时长
       const effectiveWorkload = effectiveCategory.reduce((acc, effective) => {
-        return acc + weekDailyInfoObj[effective];
+        return acc + weekDailyInfoObj[effective.value];
       }, 0);
 
       weekDailyInfoObj['weekNum'] = payload.dailyInfo.weekNum;

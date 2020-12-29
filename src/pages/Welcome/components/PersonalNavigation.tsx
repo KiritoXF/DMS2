@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect, useIntl } from 'umi';
 import { Card } from 'antd';
-import fishingJson from '../../../../dms.config.json';
+import { getPersonalNavigation } from '@/utils/utils';
 
 const PersonalNavigation = () => {
 
@@ -15,7 +15,7 @@ const PersonalNavigation = () => {
 
   return (
     <Card title={formatMessage({ id: 'welcome.navigation', defaultMessage: '导航' })}>
-      {fishingJson.navigationList.map(navigation => {
+      {getPersonalNavigation().map(navigation => {
         return <a href={navigation.href} target="_blank"><Card.Grid style={gridStyle}>{navigation.title}</Card.Grid></a>
       })}
     </Card>
