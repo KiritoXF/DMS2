@@ -149,7 +149,7 @@ const PersonalWeekDaily: React.FC<PropsType> = (props) => {
     dispatch({
       type: 'weekDaily/exportDailyInfo',
       payload: {
-        weekDailyList: weekDaily.weekDailyList.slice(startIndex, endIndex + 1)
+        weekDailyList: weekDaily.weekDailyList.reverse().slice(startIndex, endIndex + 1)
           .map(info => { return { ...info, weekData: JSON.stringify(info.weekData) } }),
         header: tableColumns,
         fileName: `${weekDaily.startList[startIndex].label.split('-')[0]}`

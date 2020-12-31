@@ -75,9 +75,9 @@ const TimeProgress = () => {
   // 年 的进度
   const getYearProgress = () => {
     const dayCount =
-      moment().endOf('year').diff(moment().startOf('year'), 'days') + 1;
+      moment().endOf('year').diff(moment().startOf('year'), 'days');
     return (
-      ((dayCount - getYearRestDays() + 1) * 24 +
+      ((dayCount - getYearRestDays() - 1) * 24 +
         getCurrentDayPastHours()) /
       (dayCount * 24)
     );
