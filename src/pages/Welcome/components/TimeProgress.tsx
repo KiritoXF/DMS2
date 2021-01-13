@@ -40,17 +40,26 @@ const TimeProgress = () => {
     return 23 - currentDate.getHours();
   }
 
+  // 获取今天是一周里的第几天
+  const getDay = () => {
+    const restDay = currentDate.getDay();
+    if (restDay === 0) {
+      return 7;
+    }
+    return restDay;
+  }
+
   // 周 的进度
   const getWeekProgress = () => {
     return (
-      (currentDate.getDay() - 1) / 7 +
+      (getDay() - 1) / 7 +
       getCurrentDayPastHours() / (7 * 24)
     );
   }
 
   // 距离这周结束还剩多少天
   const getWeekRestDays = () => {
-    return 7 - currentDate.getDay();
+    return 7 - getDay();
   }
 
   // 当前月份有多少天
