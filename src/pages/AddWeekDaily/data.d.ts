@@ -17,6 +17,16 @@ interface DayInfoType {
   workInfos: WorkInfoType[];
 }
 
+interface WeekDataType {
+  monday: DayInfoType,
+  tuesday: DayInfoType,
+  wednesday: DayInfoType,
+  thursday: DayInfoType,
+  friday: DayInfoType,
+  saturday: DayInfoType,
+  sunday: DayInfoType,
+}
+
 export interface AddWeekDailyType {
   timeInterval: String;
   weekNum: number;
@@ -30,13 +40,5 @@ export interface AddWeekDailyType {
   weekday: number;
   averageWorkload: number;
   workSaturation: number;
-  weekData: {
-    monday: DayInfoType,
-    tuesday: DayInfoType,
-    wednesday: DayInfoType,
-    thursday: DayInfoType,
-    friday: DayInfoType,
-    saturday: DayInfoType,
-    sunday: DayInfoType,
-  };
+  weekData: WeekDataType;
 }

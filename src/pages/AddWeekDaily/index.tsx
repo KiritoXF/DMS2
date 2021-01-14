@@ -5,6 +5,7 @@ import moment, { Moment } from 'moment';
 import DailyDisplay from './components/DailyDisplay';
 import { DailyInfoType } from '../WeekDaily/data';
 import { AddWeekDailyType } from './data';
+import SummaryChart from './components/SummaryChart';
 
 const { TabPane } = Tabs;
 
@@ -168,7 +169,10 @@ const Daily: React.FC<PropsType> = (props) => {
           <Link to="/weekDaily"><Button>{formatMessage({ id: 'cmn.back', defaultMessage: '返回' })}</Button></Link>
         </Space>
         <Divider />
-        <Tabs defaultActiveKey="1" centered type="card">
+        <Tabs centered type="card">
+          <TabPane tab={formatMessage({ id: 'addWeekDaily.detail', defaultMessage: '详情' })} key="0">
+            <SummaryChart />
+          </TabPane>
           <TabPane tab={formatMessage({ id: 'addWeekDaily.monday', defaultMessage: '周一' })} key="1">
             <DailyDisplay data={dailyInfo?.weekData?.monday} date={weekRange[0]} week="monday" />
           </TabPane>
