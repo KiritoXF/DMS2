@@ -41,6 +41,7 @@
           },
           {
             path: '/weekDaily/analysis',
+            hideInMenu: true,
             component: './DailyAnalysis',
           },
           {
@@ -50,18 +51,20 @@
             routes: [
               {
                 path: '/weekDaily',
+                redirect: '/weekDaily/daily',
+              },
+              {
+                path: '/weekDaily/daily',
                 name: 'weekDaily',
                 component: './WeekDaily',
               },
               {
                 path: '/weekDaily/add',
-                name: 'weekDaily add',
                 hideInMenu: true,
                 component: './AddWeekDaily',
               },
               {
                 path: '/weekDaily/edit/:weekNum',
-                name: 'weekDaily edit',
                 hideInMenu: true,
                 component: './AddWeekDaily',
               },

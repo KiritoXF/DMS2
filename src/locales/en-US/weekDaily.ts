@@ -57,5 +57,14 @@ export default {
   "timeProgress.year": "year",
   "timeProgress.month": "month",
   "timeProgress.week": "week",
-  "timeProgress.day": "day"
+  "timeProgress.day": "day",
+  "menu.daily": "weekly",
+  "menu.daily.weekDaily": "My weekly report",
+  "menu.daily.chart": "Weekly analysis",
+  "category.coding": "coding",
+  "category.testing": "test",
+  "category.documentWriting": "Document writing",
+  "category.selfStudying": "Self-study",
+  "category.translate": "translation",
+  "category.useless": "useless"
 }

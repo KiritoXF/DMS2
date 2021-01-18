@@ -145,7 +145,6 @@ const PersonalWeekDaily: React.FC<PropsType> = (props) => {
   }, []);
 
   const exportDailyInfo = () => {
-    debugger;
     dispatch({
       type: 'weekDaily/exportDailyInfo',
       payload: {

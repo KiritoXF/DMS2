@@ -97,7 +97,6 @@ export const SelectLang: React.FC<SelectLangProps> = (props) => {
   );
 
   const allLangUIConfig = transformArrayToObject(postLocalesData ? postLocalesData(defaultLangUConfig) : defaultLangUConfig);
-  debugger;
 
   const handleClick = onItemClick
     ? (params: ClickParam) => onItemClick(params)

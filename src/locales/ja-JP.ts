@@ -57,5 +57,14 @@ export default {
   "timeProgress.year": "年",
   "timeProgress.month": "月",
   "timeProgress.week": "週間",
-  "timeProgress.day": "日"
+  "timeProgress.day": "日",
+  "menu.daily": "毎週",
+  "menu.daily.weekDaily": "個人週報",
+  "menu.daily.chart": "毎週の分析",
+  "category.coding": "コーディング",
+  "category.testing": "テスト",
+  "category.documentWriting": "ドキュメント編集",
+  "category.selfStudying": "学ぶ",
+  "category.translate": "翻訳",
+  "category.useless": "無用"
 }

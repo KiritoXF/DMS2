@@ -57,5 +57,14 @@ export default {
   "timeProgress.year": "年",
   "timeProgress.month": "月",
   "timeProgress.week": "週",
-  "timeProgress.day": "天"
+  "timeProgress.day": "天",
+  "menu.daily": "週報",
+  "menu.daily.weekDaily": "我的周報",
+  "menu.daily.chart": "週報分析",
+  "category.coding": "編碼",
+  "category.testing": "測試",
+  "category.documentWriting": "文檔編寫",
+  "category.selfStudying": "自學",
+  "category.translate": "翻譯",
+  "category.useless": "準備工作"
 }
