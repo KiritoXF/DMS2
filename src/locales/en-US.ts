@@ -5,6 +5,7 @@ import pwa from './en-US/pwa';
 import settingDrawer from './en-US/settingDrawer';
 import settings from './en-US/settings';
 import pages from './en-US/pages';
+import weekDaily from './en-US/weekDaily';
 
 export default {
   'navBar.lang': 'Languages',
@@ -21,4 +22,5 @@ export default {
   ...pwa,
   ...component,
   ...pages,
+  ...weekDaily,
 };
