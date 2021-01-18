@@ -33,7 +33,7 @@ const handleImportData = (data) => {
         ((Number(item[2]) + Number(item[3]) + Number(item[4]) + Number(item[6])) / Number(item[8])).toFixed(1)
       ) || 0,
       // unescape and remove the double quotes at start and last.
-      weekData: JSON.parse(unescape(item[13]).replace(/^["|'](.*)["|']$/g, "$1"))
+      weekData: JSON.parse(unescape(item[12]).replace(/^["|'](.*)["|']$/g, "$1"))
     });
   });
   return handledData;

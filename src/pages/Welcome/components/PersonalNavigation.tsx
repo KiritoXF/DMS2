@@ -16,7 +16,8 @@ const PersonalNavigation = () => {
   return (
     <Card title={formatMessage({ id: 'welcome.navigation', defaultMessage: '导航' })}>
       {getPersonalNavigation().map(navigation => {
-        return <a href={navigation.href} target="_blank"><Card.Grid style={gridStyle}>{navigation.title}</Card.Grid></a>
+        return <a href={navigation.href} target="_blank" key={navigation.title}>
+          <Card.Grid style={gridStyle}>{navigation.title}</Card.Grid></a>
       })}
     </Card>
   );

@@ -1,4 +1,5 @@
 import DailyInfoType from '../WeekDaily/data';
+import WorkInfoType from '../WeekDaily/data';
 
 interface SummaryDataType {
   weekday: string;

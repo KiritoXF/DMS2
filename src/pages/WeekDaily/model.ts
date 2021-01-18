@@ -55,6 +55,7 @@ const Model: ModelType = {
     // 导入CSV文件
     *importDailyInfo({ payload }, { call, put }) {
       yield call(importDailyInfo, payload);
+      location.reload();
     },
 
     // 导出CSV文件
