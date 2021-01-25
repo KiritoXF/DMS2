@@ -153,7 +153,8 @@ const PersonalWeekDaily: React.FC<PropsType> = (props) => {
         header: tableColumns,
         fileName: `${weekDaily.startList[startIndex].label.split('-')[0]}`
           + `-${weekDaily.endList[endIndex].label.split('-')[1]}`
-          + `${formatMessage({ id: 'weekDaily.weekDaily', defaultMessage: '周报.xlsx' })}`,
+          + `${formatMessage({ id: 'weekDaily.weekDaily', defaultMessage: '周报' })}`
+          + '.xlsx',
       }
     });
   }

@@ -35,7 +35,7 @@ export default {
   "cmn.yes": "はい",
   "cmn.no": "いいえ",
   "cmn.delete": "削除",
-  "weekDaily.weekDaily": "毎週",
+  "weekDaily.weekDaily": "報告",
   "weekDaily.title": "個人週報",
   "weekDaily.import": "週報インポート",
   "weekDaily.add": "週報作成",
