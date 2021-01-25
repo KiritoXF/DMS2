@@ -91,7 +91,7 @@ const AddWeekDailyModel: ModelType = {
               weekDailyInfoObj[category.value] = 0;
             }
             payload.dailyInfo.weekData[weekDay].workInfos.forEach((current: { category: string; cost: number; }) => {
-              if (current.category === category.value) {
+              if (current.category === category.label) {
                 sumWeekWorkload += current.cost;
                 weekDailyInfoObj[category.value] += current.cost;
               }
