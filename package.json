@@ -54,6 +54,7 @@
     "@umijs/route-utils": "^1.0.33",
     "antd": "^4.8.0",
     "classnames": "^2.2.6",
+    "dexie": "3.0.3",
     "esbuild-windows-64": "^0.8.23",
     "lodash": "^4.17.11",
     "moment": "^2.25.3",

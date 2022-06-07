@@ -37,10 +37,11 @@ export default defineConfig({
   title: false,
   ignoreMomentLocale: true,
   proxy: proxy[REACT_APP_ENV || 'dev'],
-  publicPath: '/',
+  publicPath: '/kiritoxf.github.io.dms2/',
   manifest: {
-    basePath: '/',
+    basePath: '/kiritoxf.github.io.dms2/',
   },
+  mfsu: {},
   // exportStatic: {},
   esbuild: {},
 });
