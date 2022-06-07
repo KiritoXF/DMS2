@@ -8,9 +8,10 @@ Daily Management System 2.0
 数据存在 IndexedDB 里，可以在 F12 的 Application 里找到。
 
 ## Demo
-暂无
 
-~~如果你曾经打开过这个链接，可能会需要多按几次 ctrl + shift + R 强制刷新，不然页面还是上一次的缓存。
+[https://kiritoxf.github.io/kiritoxf.github.io.dms2/](https://kiritoxf.github.io/kiritoxf.github.io.dms2/)
+
+如果你曾经打开过这个链接，可能会需要多按几次 ctrl + shift + R 强制刷新，不然页面还是上一次的缓存。
 
 ## 安装依赖
 
